@@ -11,6 +11,27 @@ const App = () => (
     <button type="button">7</button>
     <button type="button">8</button>
     <button type="button">9</button>
+    <button type="button" aria-label="plus">
+      +
+    </button>
+    <button type="button" aria-label="minus">
+      -
+    </button>
+    <button type="button" aria-label="divide">
+      /
+    </button>
+    <button type="button" aria-label="multiply">
+      *
+    </button>
+    <button type="button" aria-label="equal">
+      =
+    </button>
+    <button type="button" aria-label="clear">
+      C
+    </button>
+    <button type="button" aria-label="clear all">
+      AC
+    </button>
   </>
 );
 
