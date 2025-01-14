@@ -119,4 +119,27 @@ describe('operations', () => {
       });
     }
   });
+
+  describe('should display the result of the previous result and a new number after an equal button click', () => {
+    const expectedResults = ['14', '2', '1', '64'];
+
+    for (let i = 0; i < operations.length; i += 1) {
+      it(`${operations[i]} operation`, async () => {
+        const { user } = renderWithUser(<App />);
+
+        await user.click(screen.getByRole('button', { name: '8' }));
+        await user.click(screen.getByRole('button', { name: operations[i] }));
+        await user.click(screen.getByRole('button', { name: '2' }));
+        await user.click(screen.getByRole('button', { name: 'equal' }));
+
+        await user.click(screen.getByRole('button', { name: operations[i] }));
+        await user.click(screen.getByRole('button', { name: '4' }));
+        await user.click(screen.getByRole('button', { name: 'equal' }));
+
+        expect(
+          screen.getByRole('alert', { name: /display/i }),
+        ).toHaveDisplayValue(expectedResults[i]);
+      });
+    }
+  });
 });
