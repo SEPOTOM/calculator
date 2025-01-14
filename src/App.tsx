@@ -1,5 +1,7 @@
 import { MouseEvent, useState } from 'react';
 
+import { performCalculation } from '@/utils';
+
 const DIGITS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const App = () => {
@@ -25,27 +27,13 @@ const App = () => {
       return;
     }
 
-    switch (lastOperation) {
-      case '+': {
-        setCurrentNumberStr(`${prevNumber + Number(currentNumberStr)}`);
-        break;
-      }
-      case '-': {
-        setCurrentNumberStr(`${prevNumber - Number(currentNumberStr)}`);
-        break;
-      }
-      case '*': {
-        setCurrentNumberStr(`${prevNumber * Number(currentNumberStr)}`);
-        break;
-      }
-      case '/': {
-        setCurrentNumberStr(`${prevNumber / Number(currentNumberStr)}`);
-        break;
-      }
-      default: {
-        throw new Error('Unknown operation');
-      }
-    }
+    const result = performCalculation(
+      prevNumber,
+      currentNumberStr,
+      lastOperation,
+    );
+
+    setCurrentNumberStr(result);
   };
 
   return (
