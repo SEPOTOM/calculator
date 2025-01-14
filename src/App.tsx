@@ -1,5 +1,7 @@
 import { MouseEvent, useState } from 'react';
 
+const DIGITS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
 const App = () => {
   const [currentNumberStr, setCurrentNumberStr] = useState('');
   const [prevNumber, setPrevNumber] = useState<Nullable<number>>(null);
@@ -55,36 +57,11 @@ const App = () => {
         readOnly
         aria-label="Calculator display"
       />
-      <button type="button" onClick={handleDigitButtonClick}>
-        0
-      </button>
-      <button type="button" onClick={handleDigitButtonClick}>
-        1
-      </button>
-      <button type="button" onClick={handleDigitButtonClick}>
-        2
-      </button>
-      <button type="button" onClick={handleDigitButtonClick}>
-        3
-      </button>
-      <button type="button" onClick={handleDigitButtonClick}>
-        4
-      </button>
-      <button type="button" onClick={handleDigitButtonClick}>
-        5
-      </button>
-      <button type="button" onClick={handleDigitButtonClick}>
-        6
-      </button>
-      <button type="button" onClick={handleDigitButtonClick}>
-        7
-      </button>
-      <button type="button" onClick={handleDigitButtonClick}>
-        8
-      </button>
-      <button type="button" onClick={handleDigitButtonClick}>
-        9
-      </button>
+      {DIGITS.map((digit) => (
+        <button type="button" onClick={handleDigitButtonClick} key={digit}>
+          {digit}
+        </button>
+      ))}
       <button
         type="button"
         aria-label="plus"
