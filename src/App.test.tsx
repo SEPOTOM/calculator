@@ -70,4 +70,21 @@ describe('App', () => {
       '98765432',
     );
   });
+
+  describe('should clear the display after an operation button click with no previous number', () => {
+    const operations = ['plus', 'minus', 'divide', 'multiply'];
+
+    for (const operation of operations) {
+      it(`${operation} button`, async () => {
+        const { user } = renderWithUser(<App />);
+        await user.click(screen.getByRole('button', { name: '5' }));
+
+        await user.click(screen.getByRole('button', { name: operation }));
+
+        expect(
+          screen.getByRole('alert', { name: /display/i }),
+        ).toHaveDisplayValue('');
+      });
+    }
+  });
 });
