@@ -10,6 +10,10 @@ const App = () => {
     }
   };
 
+  const handleOperationButtonClick = () => {
+    setDisplayValue('');
+  };
+
   return (
     <>
       <input
@@ -49,16 +53,32 @@ const App = () => {
       <button type="button" onClick={handleDigitButtonClick}>
         9
       </button>
-      <button type="button" aria-label="plus">
+      <button
+        type="button"
+        aria-label="plus"
+        onClick={handleOperationButtonClick}
+      >
         +
       </button>
-      <button type="button" aria-label="minus">
+      <button
+        type="button"
+        aria-label="minus"
+        onClick={handleOperationButtonClick}
+      >
         -
       </button>
-      <button type="button" aria-label="divide">
+      <button
+        type="button"
+        aria-label="divide"
+        onClick={handleOperationButtonClick}
+      >
         /
       </button>
-      <button type="button" aria-label="multiply">
+      <button
+        type="button"
+        aria-label="multiply"
+        onClick={handleOperationButtonClick}
+      >
         *
       </button>
       <button type="button" aria-label="equal">
