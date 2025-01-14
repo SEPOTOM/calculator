@@ -20,4 +20,27 @@ describe('App', () => {
       });
     }
   });
+
+  describe('should display operation and clear buttons', () => {
+    const buttonsNames = [
+      'plus',
+      'minus',
+      'divide',
+      'multiply',
+      'equal',
+      'clear',
+      'clear all',
+    ];
+    const displayValues = ['+', '-', '/', '*', '=', 'C', 'AC'];
+
+    for (let i = 0; i < buttonsNames.length; i += 1) {
+      it(`${buttonsNames[i]} button`, () => {
+        render(<App />);
+
+        expect(
+          screen.getByRole('button', { name: buttonsNames[i] }),
+        ).toHaveTextContent(displayValues[i]);
+      });
+    }
+  });
 });
