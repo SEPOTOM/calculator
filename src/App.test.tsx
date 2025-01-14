@@ -156,4 +156,22 @@ describe('clear button', () => {
       '',
     );
   });
+
+  describe('should display the previous number if is clicked after an operation button click', () => {
+    const operations = ['plus', 'minus', 'divide', 'multiply'];
+
+    for (const operation of operations) {
+      it(`${operation} operation`, async () => {
+        const { user } = renderWithUser(<App />);
+        await user.click(screen.getByRole('button', { name: '5' }));
+        await user.click(screen.getByRole('button', { name: operation }));
+
+        await user.click(screen.getByRole('button', { name: 'clear' }));
+
+        expect(
+          screen.getByRole('alert', { name: /display/i }),
+        ).toHaveDisplayValue('5');
+      });
+    }
+  });
 });
