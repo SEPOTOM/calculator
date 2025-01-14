@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 
 import App from '@/App';
+import { renderWithUser } from '@/tests';
 
 describe('App', () => {
   it('should display a display', () => {
@@ -40,6 +41,20 @@ describe('App', () => {
         expect(
           screen.getByRole('button', { name: buttonsNames[i] }),
         ).toHaveTextContent(displayValues[i]);
+      });
+    }
+  });
+
+  describe('should display the digit of clicked digit button on the display', () => {
+    for (let i = 0; i < 10; i += 1) {
+      it(`button ${i}`, async () => {
+        const { user } = renderWithUser(<App />);
+
+        await user.click(screen.getByRole('button', { name: String(i) }));
+
+        expect(
+          screen.getByRole('alert', { name: /display/i }),
+        ).toHaveDisplayValue(String(i));
       });
     }
   });
