@@ -2,6 +2,8 @@ import { MouseEvent, useState } from 'react';
 
 const App = () => {
   const [currentNumberStr, setCurrentNumberStr] = useState('');
+  const [prevNumber, setPrevNumber] = useState<Nullable<number>>(null);
+  const [lastOperation, setLastOperation] = useState('');
 
   const handleDigitButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
     if (currentNumberStr.length < 8) {
@@ -10,8 +12,38 @@ const App = () => {
     }
   };
 
-  const handleOperationButtonClick = () => {
+  const handleOperationButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
     setCurrentNumberStr('');
+    setPrevNumber(Number(currentNumberStr));
+    setLastOperation(e.currentTarget.textContent ?? '');
+  };
+
+  const handleEqualButtonClick = () => {
+    if (!prevNumber) {
+      return;
+    }
+
+    switch (lastOperation) {
+      case '+': {
+        setCurrentNumberStr(`${prevNumber + Number(currentNumberStr)}`);
+        break;
+      }
+      case '-': {
+        setCurrentNumberStr(`${prevNumber - Number(currentNumberStr)}`);
+        break;
+      }
+      case '*': {
+        setCurrentNumberStr(`${prevNumber * Number(currentNumberStr)}`);
+        break;
+      }
+      case '/': {
+        setCurrentNumberStr(`${prevNumber / Number(currentNumberStr)}`);
+        break;
+      }
+      default: {
+        throw new Error('Unknown operation');
+      }
+    }
   };
 
   return (
@@ -81,7 +113,7 @@ const App = () => {
       >
         *
       </button>
-      <button type="button" aria-label="equal">
+      <button type="button" aria-label="equal" onClick={handleEqualButtonClick}>
         =
       </button>
       <button type="button" aria-label="clear">
