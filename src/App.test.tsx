@@ -98,4 +98,24 @@ describe('App', () => {
       '9',
     );
   });
+
+  describe('should display the operation result after two entered numbers and an equal button click', () => {
+    const operations = ['plus', 'minus', 'divide', 'multiply'];
+    const expectedResults = ['10', '6', '4', '16'];
+
+    for (let i = 0; i < operations.length; i += 1) {
+      it(`${operations[i]} operation`, async () => {
+        const { user } = renderWithUser(<App />);
+        await user.click(screen.getByRole('button', { name: '8' }));
+        await user.click(screen.getByRole('button', { name: operations[i] }));
+        await user.click(screen.getByRole('button', { name: '2' }));
+
+        await user.click(screen.getByRole('button', { name: 'equal' }));
+
+        expect(
+          screen.getByRole('alert', { name: /display/i }),
+        ).toHaveDisplayValue(expectedResults[i]);
+      });
+    }
+  });
 });
