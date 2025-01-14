@@ -37,7 +37,11 @@ const App = () => {
   };
 
   const handleClearButtonClick = () => {
-    setCurrentNumberStr('');
+    if (lastOperation !== '') {
+      setCurrentNumberStr(String(prevNumber));
+    } else {
+      setCurrentNumberStr('');
+    }
   };
 
   return (
