@@ -71,9 +71,22 @@ describe('App', () => {
     );
   });
 
-  describe('should clear the display after an operation button click with no previous number', () => {
-    const operations = ['plus', 'minus', 'divide', 'multiply'];
+  it("shouldn't update the display after an equal button click with no previous number", async () => {
+    const { user } = renderWithUser(<App />);
+    await user.click(screen.getByRole('button', { name: '9' }));
 
+    await user.click(screen.getByRole('button', { name: 'equal' }));
+
+    expect(screen.getByRole('alert', { name: /display/i })).toHaveDisplayValue(
+      '9',
+    );
+  });
+});
+
+describe('operations', () => {
+  const operations = ['plus', 'minus', 'divide', 'multiply'];
+
+  describe('should clear the display after the button click with no previous number', () => {
     for (const operation of operations) {
       it(`${operation} button`, async () => {
         const { user } = renderWithUser(<App />);
@@ -88,19 +101,7 @@ describe('App', () => {
     }
   });
 
-  it("shouldn't update the display after an equal button click with no previous number", async () => {
-    const { user } = renderWithUser(<App />);
-    await user.click(screen.getByRole('button', { name: '9' }));
-
-    await user.click(screen.getByRole('button', { name: 'equal' }));
-
-    expect(screen.getByRole('alert', { name: /display/i })).toHaveDisplayValue(
-      '9',
-    );
-  });
-
-  describe('should display the operation result after two entered numbers and an equal button click', () => {
-    const operations = ['plus', 'minus', 'divide', 'multiply'];
+  describe('should display the result after two entered numbers and an equal button click', () => {
     const expectedResults = ['10', '6', '4', '16'];
 
     for (let i = 0; i < operations.length; i += 1) {
