@@ -36,6 +36,10 @@ const App = () => {
     setCurrentNumberStr(result);
   };
 
+  const handleClearButtonClick = () => {
+    setCurrentNumberStr('');
+  };
+
   return (
     <>
       <input
@@ -81,7 +85,7 @@ const App = () => {
       <button type="button" aria-label="equal" onClick={handleEqualButtonClick}>
         =
       </button>
-      <button type="button" aria-label="clear">
+      <button type="button" aria-label="clear" onClick={handleClearButtonClick}>
         C
       </button>
       <button type="button" aria-label="clear all">
