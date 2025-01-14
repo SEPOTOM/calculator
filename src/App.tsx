@@ -1,17 +1,17 @@
 import { MouseEvent, useState } from 'react';
 
 const App = () => {
-  const [displayValue, setDisplayValue] = useState('');
+  const [currentNumberStr, setCurrentNumberStr] = useState('');
 
   const handleDigitButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
-    if (displayValue.length < 8) {
+    if (currentNumberStr.length < 8) {
       const newDigit = e.currentTarget.textContent;
-      setDisplayValue((dv) => `${dv}${newDigit}`);
+      setCurrentNumberStr((dv) => `${dv}${newDigit}`);
     }
   };
 
   const handleOperationButtonClick = () => {
-    setDisplayValue('');
+    setCurrentNumberStr('');
   };
 
   return (
@@ -19,7 +19,7 @@ const App = () => {
       <input
         role="alert"
         type="text"
-        value={displayValue}
+        value={currentNumberStr}
         readOnly
         aria-label="Calculator display"
       />
