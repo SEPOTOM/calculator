@@ -58,4 +58,16 @@ describe('App', () => {
       });
     }
   });
+
+  it('should allow the user to enter a sequence of digits with a max length of 8', async () => {
+    const { user } = renderWithUser(<App />);
+
+    for (let i = 9; i >= 0; i -= 1) {
+      await user.click(screen.getByRole('button', { name: String(i) }));
+    }
+
+    expect(screen.getByRole('alert', { name: /display/i })).toHaveDisplayValue(
+      '98765432',
+    );
+  });
 });
