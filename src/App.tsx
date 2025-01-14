@@ -4,7 +4,10 @@ const App = () => {
   const [displayValue, setDisplayValue] = useState('');
 
   const handleDigitButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
-    setDisplayValue(e.currentTarget.textContent ?? '');
+    if (displayValue.length < 8) {
+      const newDigit = e.currentTarget.textContent;
+      setDisplayValue((dv) => `${dv}${newDigit}`);
+    }
   };
 
   return (
