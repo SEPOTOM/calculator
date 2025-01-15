@@ -152,6 +152,12 @@ describe('App', () => {
       ).toHaveDisplayValue('1');
     });
   });
+
+  it('should display the dot button', () => {
+    render(<App />);
+
+    expect(screen.getByRole('button', { name: 'dot' })).toHaveTextContent('.');
+  });
 });
 
 describe('operations', () => {
