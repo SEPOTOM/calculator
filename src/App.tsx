@@ -1,7 +1,6 @@
 import { MouseEvent, useState } from 'react';
 
-import clsx from 'clsx';
-
+import { Button } from '@/components';
 import { performCalculation } from '@/utils';
 
 const DIGITS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
@@ -80,95 +79,80 @@ const App = () => {
       />
 
       <div className="grid grid-cols-4 grid-rows-5 gap-3">
-        <button
-          type="button"
+        <Button
           aria-label="change number's sign"
+          variant="border"
           onClick={handleChangeSignButtonClick}
-          className="h-16 rounded-md border-4 border-main font-mono text-3xl font-black text-main"
         >
           +/-
-        </button>
-        <button
-          type="button"
+        </Button>
+        <Button
           aria-label="clear all"
+          variant="border"
           onClick={handleClearAllButtonClick}
-          className="h-16 rounded-md border-4 border-main font-mono text-3xl font-black text-main"
         >
           AC
-        </button>
-        <button
-          type="button"
+        </Button>
+        <Button
           aria-label="clear"
+          variant="border"
           onClick={handleClearButtonClick}
-          className="h-16 rounded-md border-4 border-main font-mono text-3xl font-black text-main"
         >
           C
-        </button>
-        <button
-          type="button"
+        </Button>
+        <Button
           aria-label="plus"
+          variant="border"
           onClick={handleOperationButtonClick}
-          className="h-16 rounded-md border-4 border-main font-mono text-3xl font-black text-main"
         >
           +
-        </button>
+        </Button>
 
         <div className="col-span-3 row-span-4 grid grid-cols-3 grid-rows-4 gap-3">
           {DIGITS.map((digit, index) => (
-            <button
-              type="button"
+            <Button
               onClick={handleDigitButtonClick}
               key={digit}
-              className={clsx(
-                'h-16 rounded-md bg-main font-mono text-3xl text-secondary',
-                index === 9 && 'col-span-2',
-              )}
+              variant="fill"
+              className={index === 9 ? 'col-span-2' : ''}
             >
               {digit}
-            </button>
+            </Button>
           ))}
 
-          <button
-            type="button"
-            aria-label="dot"
-            className="h-16 rounded-md bg-main font-mono text-3xl text-secondary"
-          >
+          <Button aria-label="dot" variant="fill">
             .
-          </button>
+          </Button>
         </div>
 
-        <button
-          type="button"
+        <Button
           aria-label="minus"
+          variant="border"
           onClick={handleOperationButtonClick}
-          className="h-16 rounded-md border-4 border-main font-mono text-3xl font-black text-main"
         >
           -
-        </button>
-        <button
-          type="button"
+        </Button>
+        <Button
           aria-label="multiply"
+          variant="border"
           onClick={handleOperationButtonClick}
-          className="h-16 rounded-md border-4 border-main font-mono text-3xl font-black text-main"
         >
           *
-        </button>
-        <button
-          type="button"
+        </Button>
+        <Button
           aria-label="divide"
+          variant="border"
           onClick={handleOperationButtonClick}
-          className="h-16 rounded-md border-4 border-main font-mono text-3xl font-black text-main"
         >
           /
-        </button>
-        <button
-          type="button"
+        </Button>
+        <Button
           aria-label="equal"
+          variant="border"
           onClick={handleEqualButtonClick}
-          className="h-16 rounded-md border-4 border-main font-mono text-3xl font-black text-main"
         >
           =
-        </button>
+        </Button>
       </div>
     </div>
   );
