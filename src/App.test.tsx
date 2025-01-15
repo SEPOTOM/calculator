@@ -113,6 +113,14 @@ describe('App', () => {
       'ERR',
     );
   });
+
+  it("should display the change number's sign button", () => {
+    render(<App />);
+
+    expect(
+      screen.getByRole('button', { name: "change number's sign" }),
+    ).toHaveTextContent('+/-');
+  });
 });
 
 describe('operations', () => {
