@@ -3,10 +3,12 @@ import { render, screen } from '@testing-library/react';
 import App from '@/App';
 
 describe('App in initial state', () => {
-  it('should display a display', () => {
+  it('should display a display with a default value of 0', () => {
     render(<App />);
 
-    expect(screen.getByRole('alert', { name: /display/i })).toBeInTheDocument();
+    expect(screen.getByRole('alert', { name: /display/i })).toHaveDisplayValue(
+      '0',
+    );
   });
 
   describe('should display digit buttons', () => {
