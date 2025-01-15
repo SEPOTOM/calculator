@@ -96,6 +96,23 @@ describe('App', () => {
       });
     }
   });
+
+  it('should display ERR if any operation exceeds the 8 digit maximum', async () => {
+    const { user } = renderWithUser(<App />);
+
+    for (let i = 0; i < 8; i += 1) {
+      await user.click(screen.getByRole('button', { name: '9' }));
+    }
+
+    await user.click(screen.getByRole('button', { name: 'plus' }));
+    await user.click(screen.getByRole('button', { name: '1' }));
+
+    await user.click(screen.getByRole('button', { name: 'equal' }));
+
+    expect(screen.getByRole('alert', { name: /display/i })).toHaveDisplayValue(
+      'ERR',
+    );
+  });
 });
 
 describe('operations', () => {
