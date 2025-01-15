@@ -28,3 +28,26 @@ export const clickButtons = async (user: UserEvent, sequence: string[]) => {
     await user.click(screen.getByRole('button', { name: buttonName }));
   }
 };
+
+export const OPERATIONS = {
+  plus: {
+    name: 'plus',
+    symbol: '+',
+    calculateResult: (a: number, b: number) => a + b,
+  },
+  minus: {
+    name: 'minus',
+    symbol: '-',
+    calculateResult: (a: number, b: number) => a - b,
+  },
+  divide: {
+    name: 'divide',
+    symbol: '/',
+    calculateResult: (a: number, b: number) => a / b,
+  },
+  multiply: {
+    name: 'multiply',
+    symbol: '*',
+    calculateResult: (a: number, b: number) => a * b,
+  },
+} as const;
