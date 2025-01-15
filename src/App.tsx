@@ -74,7 +74,7 @@ const App = () => {
     const currentNumber = Number(currentNumberStr);
     const absCurrentNumber = Math.abs(currentNumber);
 
-    if (absCurrentNumber === currentNumber) {
+    if (Object.is(absCurrentNumber, currentNumber)) {
       setCurrentNumberStr(`-${currentNumber}`);
     } else {
       setCurrentNumberStr(`${absCurrentNumber}`);
