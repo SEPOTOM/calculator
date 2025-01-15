@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react';
 
 import App from '@/App';
-import { getDisplay } from '@/tests/utils';
+import { expectDisplayValueToBe } from '@/tests/utils';
 
 describe('App in initial state', () => {
   it('should display a display with a default value of 0', () => {
     render(<App />);
 
-    expect(getDisplay()).toHaveDisplayValue('0');
+    expectDisplayValueToBe('0');
   });
 
   describe('should display digit buttons', () => {

@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 
 import App from '@/App';
-import { getDisplay, renderWithUser } from '@/tests';
+import { expectDisplayValueToBe, renderWithUser } from '@/tests';
 
 describe('Equal button', () => {
   it("shouldn't update the display if there is no previous number", async () => {
@@ -10,6 +10,6 @@ describe('Equal button', () => {
 
     await user.click(screen.getByRole('button', { name: 'equal' }));
 
-    expect(getDisplay()).toHaveDisplayValue('9');
+    expectDisplayValueToBe('9');
   });
 });

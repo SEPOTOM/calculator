@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 
 import App from '@/App';
-import { getDisplay, renderWithUser } from '@/tests';
+import { expectDisplayValueToBe, renderWithUser } from '@/tests';
 
 describe('Entering values', () => {
   describe('should display the corresponding digits on a digit button click', () => {
@@ -11,7 +11,7 @@ describe('Entering values', () => {
 
         await user.click(screen.getByRole('button', { name: String(i) }));
 
-        expect(getDisplay()).toHaveDisplayValue(String(i));
+        expectDisplayValueToBe(String(i));
       });
     }
   });
@@ -23,7 +23,7 @@ describe('Entering values', () => {
       await user.click(screen.getByRole('button', { name: String(i) }));
     }
 
-    expect(getDisplay()).toHaveDisplayValue('98765432');
+    expectDisplayValueToBe('98765432');
   });
 
   describe('should replace the single 0 with the corresponding digit on a digit button click', () => {
@@ -34,7 +34,7 @@ describe('Entering values', () => {
 
         await user.click(screen.getByRole('button', { name: String(i) }));
 
-        expect(getDisplay()).toHaveDisplayValue(String(i));
+        expectDisplayValueToBe(String(i));
       });
     }
 
@@ -48,7 +48,7 @@ describe('Entering values', () => {
 
         await user.click(screen.getByRole('button', { name: String(i) }));
 
-        expect(getDisplay()).toHaveDisplayValue(`-${String(i)}`);
+        expectDisplayValueToBe(`-${String(i)}`);
       });
     }
   });
@@ -60,7 +60,7 @@ describe('Entering values', () => {
     await user.click(screen.getByRole('button', { name: 'dot' }));
     await user.click(screen.getByRole('button', { name: '2' }));
 
-    expect(getDisplay()).toHaveDisplayValue('5.2');
+    expectDisplayValueToBe('5.2');
   });
 
   it('should allow the user to enter a maximum of 3 digits after the dot', async () => {
@@ -73,6 +73,6 @@ describe('Entering values', () => {
       await user.click(screen.getByRole('button', { name: '1' }));
     }
 
-    expect(getDisplay()).toHaveDisplayValue('7.111');
+    expectDisplayValueToBe('7.111');
   });
 });

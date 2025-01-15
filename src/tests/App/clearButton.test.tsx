@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 
 import App from '@/App';
-import { getDisplay, renderWithUser } from '@/tests';
+import { expectDisplayValueToBe, renderWithUser } from '@/tests';
 
 describe('Clear button', () => {
   it('should clear the display', async () => {
@@ -11,7 +11,7 @@ describe('Clear button', () => {
 
     await user.click(screen.getByRole('button', { name: 'clear' }));
 
-    expect(getDisplay()).toHaveDisplayValue('');
+    expectDisplayValueToBe('');
   });
 
   describe('should display the previous number after an operation button click', () => {
@@ -25,7 +25,7 @@ describe('Clear button', () => {
 
         await user.click(screen.getByRole('button', { name: 'clear' }));
 
-        expect(getDisplay()).toHaveDisplayValue('5');
+        expectDisplayValueToBe('5');
       });
     }
   });

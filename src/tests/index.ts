@@ -1,3 +1,7 @@
-import { getDisplay, renderWithUser } from '@/tests/utils';
+import {
+  expectDisplayValueToBe,
+  getDisplay,
+  renderWithUser,
+} from '@/tests/utils';
 
-export { getDisplay, renderWithUser };
+export { expectDisplayValueToBe, getDisplay, renderWithUser };

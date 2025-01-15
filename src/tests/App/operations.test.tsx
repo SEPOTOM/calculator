@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 
 import App from '@/App';
-import { getDisplay, renderWithUser } from '@/tests';
+import { expectDisplayValueToBe, renderWithUser } from '@/tests';
 
 describe('Operations', () => {
   const operations = ['plus', 'minus', 'divide', 'multiply'];
@@ -14,7 +14,7 @@ describe('Operations', () => {
 
         await user.click(screen.getByRole('button', { name: operation }));
 
-        expect(getDisplay()).toHaveDisplayValue('');
+        expectDisplayValueToBe('');
       });
     }
   });
@@ -31,7 +31,7 @@ describe('Operations', () => {
 
         await user.click(screen.getByRole('button', { name: 'equal' }));
 
-        expect(getDisplay()).toHaveDisplayValue(expectedResults[i]);
+        expectDisplayValueToBe(expectedResults[i]);
       });
     }
   });
@@ -52,7 +52,7 @@ describe('Operations', () => {
         await user.click(screen.getByRole('button', { name: '4' }));
         await user.click(screen.getByRole('button', { name: 'equal' }));
 
-        expect(getDisplay()).toHaveDisplayValue(expectedResults[i]);
+        expectDisplayValueToBe(expectedResults[i]);
       });
     }
   });
@@ -69,7 +69,7 @@ describe('Operations', () => {
 
     await user.click(screen.getByRole('button', { name: 'equal' }));
 
-    expect(getDisplay()).toHaveDisplayValue('ERR');
+    expectDisplayValueToBe('ERR');
   });
 
   it('should limit the decimal part of the result to 3 digits', async () => {
@@ -93,6 +93,6 @@ describe('Operations', () => {
       await user.click(screen.getByRole('button', { name }));
     }
 
-    expect(getDisplay()).toHaveDisplayValue('0.009');
+    expectDisplayValueToBe('0.009');
   });
 });

@@ -18,3 +18,7 @@ export const renderWithUser = (
 };
 
 export const getDisplay = () => screen.getByRole('alert', { name: /display/i });
+
+export const expectDisplayValueToBe = (expectedValue: string) => {
+  expect(getDisplay()).toHaveDisplayValue(expectedValue);
+};
