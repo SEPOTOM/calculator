@@ -81,6 +81,21 @@ describe('App', () => {
       '9',
     );
   });
+
+  describe('should replace the single 0 on the display with the digit of the clicked digit button', () => {
+    for (let i = 0; i < 10; i += 1) {
+      it(`button ${i}`, async () => {
+        const { user } = renderWithUser(<App />);
+        await user.click(screen.getByRole('button', { name: '0' }));
+
+        await user.click(screen.getByRole('button', { name: String(i) }));
+
+        expect(
+          screen.getByRole('alert', { name: /display/i }),
+        ).toHaveDisplayValue(String(i));
+      });
+    }
+  });
 });
 
 describe('operations', () => {
