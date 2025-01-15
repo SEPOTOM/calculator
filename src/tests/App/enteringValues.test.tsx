@@ -56,4 +56,19 @@ describe('Entering values', () => {
       '5.2',
     );
   });
+
+  it('should allow the user to enter a maximum of 3 digits after the dot', async () => {
+    const { user } = renderWithUser(<App />);
+
+    await user.click(screen.getByRole('button', { name: '7' }));
+    await user.click(screen.getByRole('button', { name: 'dot' }));
+
+    for (let i = 0; i < 5; i += 1) {
+      await user.click(screen.getByRole('button', { name: '1' }));
+    }
+
+    expect(screen.getByRole('alert', { name: /display/i })).toHaveDisplayValue(
+      '7.111',
+    );
+  });
 });
