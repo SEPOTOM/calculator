@@ -55,6 +55,17 @@ const App = () => {
     setPrevNumber(null);
   };
 
+  const handleChangeSignButtonClick = () => {
+    const currentNumber = Number(currentNumberStr);
+    const absCurrentNumber = Math.abs(currentNumber);
+
+    if (absCurrentNumber === currentNumber) {
+      setCurrentNumberStr(`-${currentNumber}`);
+    } else {
+      setCurrentNumberStr(`${absCurrentNumber}`);
+    }
+  };
+
   return (
     <>
       <input
@@ -110,7 +121,11 @@ const App = () => {
       >
         AC
       </button>
-      <button type="button" aria-label="change number's sign">
+      <button
+        type="button"
+        aria-label="change number's sign"
+        onClick={handleChangeSignButtonClick}
+      >
         +/-
       </button>
     </>
