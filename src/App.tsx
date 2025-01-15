@@ -67,6 +67,10 @@ const App = () => {
     }
   };
 
+  const handleDotButtonClick = () => {
+    setCurrentNumberStr((cn) => `${cn}.`);
+  };
+
   return (
     <div className="m-auto max-w-5xl p-3">
       <input
@@ -120,7 +124,11 @@ const App = () => {
             </Button>
           ))}
 
-          <Button aria-label="dot" variant="fill">
+          <Button
+            aria-label="dot"
+            variant="fill"
+            onClick={handleDotButtonClick}
+          >
             .
           </Button>
         </div>
