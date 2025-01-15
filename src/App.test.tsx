@@ -175,3 +175,17 @@ describe('clear button', () => {
     }
   });
 });
+
+describe('clear all button', () => {
+  it('should display 0 on the display', async () => {
+    const { user } = renderWithUser(<App />);
+    await user.click(screen.getByRole('button', { name: '8' }));
+    await user.click(screen.getByRole('button', { name: '3' }));
+
+    await user.click(screen.getByRole('button', { name: 'clear all' }));
+
+    expect(screen.getByRole('alert', { name: /display/i })).toHaveDisplayValue(
+      '0',
+    );
+  });
+});
