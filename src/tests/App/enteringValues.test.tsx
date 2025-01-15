@@ -3,8 +3,8 @@ import { screen } from '@testing-library/react';
 import App from '@/App';
 import { renderWithUser } from '@/tests';
 
-describe('Digit buttons', () => {
-  describe('should display the corresponding digits on the display', () => {
+describe('Entering values', () => {
+  describe('should display the corresponding digits on a digit button click', () => {
     for (let i = 0; i < 10; i += 1) {
       it(`button ${i}`, async () => {
         const { user } = renderWithUser(<App />);
@@ -30,7 +30,7 @@ describe('Digit buttons', () => {
     );
   });
 
-  describe('should replace the single 0 with the corresponding digit', () => {
+  describe('should replace the single 0 with the corresponding digit on a digit button click', () => {
     for (let i = 0; i < 10; i += 1) {
       it(`button ${i}`, async () => {
         const { user } = renderWithUser(<App />);
