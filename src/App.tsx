@@ -128,6 +128,9 @@ const App = () => {
       >
         +/-
       </button>
+      <button type="button" aria-label="dot">
+        .
+      </button>
     </>
   );
 };
