@@ -110,6 +110,9 @@ const App = () => {
       >
         AC
       </button>
+      <button type="button" aria-label="change number's sign">
+        +/-
+      </button>
     </>
   );
 };
