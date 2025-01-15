@@ -3,25 +3,29 @@ export const performCalculation = (
   secondNumber: string | number,
   operator: string,
 ): string => {
+  let result: number;
+
   switch (operator) {
     case '+': {
-      return `${Number(firstNumber) + Number(secondNumber)}`;
+      result = Number(firstNumber) + Number(secondNumber);
       break;
     }
     case '-': {
-      return `${Number(firstNumber) - Number(secondNumber)}`;
+      result = Number(firstNumber) - Number(secondNumber);
       break;
     }
     case '*': {
-      return `${Number(firstNumber) * Number(secondNumber)}`;
+      result = Number(firstNumber) * Number(secondNumber);
       break;
     }
     case '/': {
-      return `${Number(firstNumber) / Number(secondNumber)}`;
+      result = Number(firstNumber) / Number(secondNumber);
       break;
     }
     default: {
       throw new Error('Unknown operation');
     }
   }
+
+  return String(Number(result.toFixed(3)));
 };
