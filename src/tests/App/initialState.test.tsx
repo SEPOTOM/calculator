@@ -30,8 +30,10 @@ describe('App in initial state', () => {
       'equal',
       'clear',
       'clear all',
+      "change number's sign",
+      'dot',
     ];
-    const displayValues = ['+', '-', '/', '*', '=', 'C', 'AC'];
+    const displayValues = ['+', '-', '/', '*', '=', 'C', 'AC', '+/-', '.'];
 
     for (let i = 0; i < buttonsNames.length; i += 1) {
       it(`${buttonsNames[i]} button`, () => {
@@ -42,19 +44,5 @@ describe('App in initial state', () => {
         ).toHaveTextContent(displayValues[i]);
       });
     }
-  });
-
-  it("should display the change number's sign button", () => {
-    render(<App />);
-
-    expect(
-      screen.getByRole('button', { name: "change number's sign" }),
-    ).toHaveTextContent('+/-');
-  });
-
-  it('should display the dot button', () => {
-    render(<App />);
-
-    expect(screen.getByRole('button', { name: 'dot' })).toHaveTextContent('.');
   });
 });
