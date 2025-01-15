@@ -44,4 +44,16 @@ describe('Entering values', () => {
       });
     }
   });
+
+  it('should allow the user to enter a floating point number', async () => {
+    const { user } = renderWithUser(<App />);
+
+    await user.click(screen.getByRole('button', { name: '5' }));
+    await user.click(screen.getByRole('button', { name: 'dot' }));
+    await user.click(screen.getByRole('button', { name: '2' }));
+
+    expect(screen.getByRole('alert', { name: /display/i })).toHaveDisplayValue(
+      '5.2',
+    );
+  });
 });
