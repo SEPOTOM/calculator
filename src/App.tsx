@@ -1,8 +1,10 @@
 import { MouseEvent, useState } from 'react';
 
+import clsx from 'clsx';
+
 import { performCalculation } from '@/utils';
 
-const DIGITS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+const DIGITS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 
 const App = () => {
   const [currentNumberStr, setCurrentNumberStr] = useState('');
@@ -67,71 +69,108 @@ const App = () => {
   };
 
   return (
-    <>
+    <div className="m-auto max-w-5xl p-3">
       <input
         role="alert"
         type="text"
         value={currentNumberStr}
         readOnly
         aria-label="Calculator display"
+        className="outline-focus mb-6 w-full max-w-full rounded-sm bg-main px-2 py-3 text-right font-mono text-5xl tracking-wider text-secondary sm:mb-9"
       />
-      {DIGITS.map((digit) => (
-        <button type="button" onClick={handleDigitButtonClick} key={digit}>
-          {digit}
+
+      <div className="grid grid-cols-4 grid-rows-5 gap-3">
+        <button
+          type="button"
+          aria-label="change number's sign"
+          onClick={handleChangeSignButtonClick}
+          className="h-16 rounded-md border-4 border-main font-mono text-3xl font-black text-main"
+        >
+          +/-
         </button>
-      ))}
-      <button
-        type="button"
-        aria-label="plus"
-        onClick={handleOperationButtonClick}
-      >
-        +
-      </button>
-      <button
-        type="button"
-        aria-label="minus"
-        onClick={handleOperationButtonClick}
-      >
-        -
-      </button>
-      <button
-        type="button"
-        aria-label="divide"
-        onClick={handleOperationButtonClick}
-      >
-        /
-      </button>
-      <button
-        type="button"
-        aria-label="multiply"
-        onClick={handleOperationButtonClick}
-      >
-        *
-      </button>
-      <button type="button" aria-label="equal" onClick={handleEqualButtonClick}>
-        =
-      </button>
-      <button type="button" aria-label="clear" onClick={handleClearButtonClick}>
-        C
-      </button>
-      <button
-        type="button"
-        aria-label="clear all"
-        onClick={handleClearAllButtonClick}
-      >
-        AC
-      </button>
-      <button
-        type="button"
-        aria-label="change number's sign"
-        onClick={handleChangeSignButtonClick}
-      >
-        +/-
-      </button>
-      <button type="button" aria-label="dot">
-        .
-      </button>
-    </>
+        <button
+          type="button"
+          aria-label="clear all"
+          onClick={handleClearAllButtonClick}
+          className="h-16 rounded-md border-4 border-main font-mono text-3xl font-black text-main"
+        >
+          AC
+        </button>
+        <button
+          type="button"
+          aria-label="clear"
+          onClick={handleClearButtonClick}
+          className="h-16 rounded-md border-4 border-main font-mono text-3xl font-black text-main"
+        >
+          C
+        </button>
+        <button
+          type="button"
+          aria-label="plus"
+          onClick={handleOperationButtonClick}
+          className="h-16 rounded-md border-4 border-main font-mono text-3xl font-black text-main"
+        >
+          +
+        </button>
+
+        <div className="col-span-3 row-span-4 grid grid-cols-3 grid-rows-4 gap-3">
+          {DIGITS.map((digit, index) => (
+            <button
+              type="button"
+              onClick={handleDigitButtonClick}
+              key={digit}
+              className={clsx(
+                'h-16 rounded-md bg-main font-mono text-3xl text-secondary',
+                index === 9 && 'col-span-2',
+              )}
+            >
+              {digit}
+            </button>
+          ))}
+
+          <button
+            type="button"
+            aria-label="dot"
+            className="h-16 rounded-md bg-main font-mono text-3xl text-secondary"
+          >
+            .
+          </button>
+        </div>
+
+        <button
+          type="button"
+          aria-label="minus"
+          onClick={handleOperationButtonClick}
+          className="h-16 rounded-md border-4 border-main font-mono text-3xl font-black text-main"
+        >
+          -
+        </button>
+        <button
+          type="button"
+          aria-label="multiply"
+          onClick={handleOperationButtonClick}
+          className="h-16 rounded-md border-4 border-main font-mono text-3xl font-black text-main"
+        >
+          *
+        </button>
+        <button
+          type="button"
+          aria-label="divide"
+          onClick={handleOperationButtonClick}
+          className="h-16 rounded-md border-4 border-main font-mono text-3xl font-black text-main"
+        >
+          /
+        </button>
+        <button
+          type="button"
+          aria-label="equal"
+          onClick={handleEqualButtonClick}
+          className="h-16 rounded-md border-4 border-main font-mono text-3xl font-black text-main"
+        >
+          =
+        </button>
+      </div>
+    </div>
   );
 };
 
