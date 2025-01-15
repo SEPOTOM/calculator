@@ -12,7 +12,9 @@ const App = () => {
   const handleDigitButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
     if (currentNumberStr.length < 8) {
       const newDigit = e.currentTarget.textContent;
-      setCurrentNumberStr((dv) => `${dv}${newDigit}`);
+      setCurrentNumberStr((dv) =>
+        dv === '0' ? (newDigit ?? '') : `${dv}${newDigit}`,
+      );
     }
   };
 
