@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 
 import App from '@/App';
-import { renderWithUser } from '@/tests';
+import { getDisplay, renderWithUser } from '@/tests';
 
 describe('Change sign button', () => {
   describe('should change the sign of the entered number', () => {
@@ -14,9 +14,7 @@ describe('Change sign button', () => {
           screen.getByRole('button', { name: "change number's sign" }),
         );
 
-        expect(
-          screen.getByRole('alert', { name: /display/i }),
-        ).toHaveDisplayValue(`-${String(i)}`);
+        expect(getDisplay()).toHaveDisplayValue(`-${String(i)}`);
       });
     }
 
@@ -32,9 +30,7 @@ describe('Change sign button', () => {
           screen.getByRole('button', { name: "change number's sign" }),
         );
 
-        expect(
-          screen.getByRole('alert', { name: /display/i }),
-        ).toHaveDisplayValue(String(i));
+        expect(getDisplay()).toHaveDisplayValue(String(i));
       });
     }
   });

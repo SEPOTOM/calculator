@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { RenderOptions, render } from '@testing-library/react';
+import { RenderOptions, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { ExtendedRenderResults } from './types';
@@ -16,3 +16,5 @@ export const renderWithUser = (
     ...render(ui, options),
   };
 };
+
+export const getDisplay = () => screen.getByRole('alert', { name: /display/i });

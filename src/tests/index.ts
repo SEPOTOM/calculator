@@ -1,3 +1,3 @@
-import { renderWithUser } from '@/tests/utils';
+import { getDisplay, renderWithUser } from '@/tests/utils';
 
-export { renderWithUser };
+export { getDisplay, renderWithUser };
