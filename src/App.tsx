@@ -46,6 +46,7 @@ const App = () => {
 
   const handleClearAllButtonClick = () => {
     setCurrentNumberStr('0');
+    setPrevNumber(null);
   };
 
   return (
