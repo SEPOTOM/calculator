@@ -19,9 +19,17 @@ const App = () => {
       }
 
       const newDigit = e.currentTarget.textContent;
-      setCurrentNumberStr((dv) =>
-        dv === '0' ? (newDigit ?? '') : `${dv}${newDigit}`,
-      );
+      setCurrentNumberStr((cn) => {
+        if (cn === '0') {
+          return newDigit ?? '';
+        }
+
+        if (cn === '-0') {
+          return `-${newDigit}`;
+        }
+
+        return `${cn}${newDigit}`;
+      });
     }
   };
 
