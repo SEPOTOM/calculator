@@ -35,7 +35,11 @@ const App = () => {
       lastOperation,
     );
 
-    setCurrentNumberStr(result);
+    if (result.length > 8) {
+      setCurrentNumberStr('ERR');
+    } else {
+      setCurrentNumberStr(result);
+    }
   };
 
   const handleClearButtonClick = () => {
