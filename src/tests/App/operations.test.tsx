@@ -79,4 +79,30 @@ describe('Operations', () => {
       'ERR',
     );
   });
+
+  it('should limit the decimal part of the result to 3 digits', async () => {
+    const { user } = renderWithUser(<App />);
+    const orderedButtonsNames = [
+      '0',
+      'dot',
+      '0',
+      '0',
+      '1',
+      'plus',
+      '0',
+      'dot',
+      '0',
+      '0',
+      '8',
+      'equal',
+    ];
+
+    for (const name of orderedButtonsNames) {
+      await user.click(screen.getByRole('button', { name }));
+    }
+
+    expect(screen.getByRole('alert', { name: /display/i })).toHaveDisplayValue(
+      '0.009',
+    );
+  });
 });
