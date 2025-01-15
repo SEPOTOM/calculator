@@ -1,14 +1,11 @@
-import { screen } from '@testing-library/react';
-
 import App from '@/App';
-import { expectDisplayValueToBe, renderWithUser } from '@/tests';
+import { clickButtons, expectDisplayValueToBe, renderWithUser } from '@/tests';
 
 describe('Equal button', () => {
   it("shouldn't update the display if there is no previous number", async () => {
     const { user } = renderWithUser(<App />);
-    await user.click(screen.getByRole('button', { name: '9' }));
 
-    await user.click(screen.getByRole('button', { name: 'equal' }));
+    await clickButtons(user, ['9', 'equal']);
 
     expectDisplayValueToBe('9');
   });

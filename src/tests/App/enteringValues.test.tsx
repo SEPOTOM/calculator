@@ -1,7 +1,5 @@
-import { screen } from '@testing-library/react';
-
 import App from '@/App';
-import { expectDisplayValueToBe, renderWithUser } from '@/tests';
+import { clickButtons, expectDisplayValueToBe, renderWithUser } from '@/tests';
 
 describe('Entering values', () => {
   describe('should display the corresponding digits on a digit button click', () => {
@@ -9,7 +7,7 @@ describe('Entering values', () => {
       it(`button ${i}`, async () => {
         const { user } = renderWithUser(<App />);
 
-        await user.click(screen.getByRole('button', { name: String(i) }));
+        await clickButtons(user, [String(i)]);
 
         expectDisplayValueToBe(String(i));
       });
@@ -20,7 +18,7 @@ describe('Entering values', () => {
     const { user } = renderWithUser(<App />);
 
     for (let i = 9; i >= 0; i -= 1) {
-      await user.click(screen.getByRole('button', { name: String(i) }));
+      await clickButtons(user, [String(i)]);
     }
 
     expectDisplayValueToBe('98765432');
@@ -30,9 +28,8 @@ describe('Entering values', () => {
     for (let i = 0; i < 10; i += 1) {
       it(`button ${i} for positive 0`, async () => {
         const { user } = renderWithUser(<App />);
-        await user.click(screen.getByRole('button', { name: '0' }));
 
-        await user.click(screen.getByRole('button', { name: String(i) }));
+        await clickButtons(user, ['0', String(i)]);
 
         expectDisplayValueToBe(String(i));
       });
@@ -41,12 +38,8 @@ describe('Entering values', () => {
     for (let i = 0; i < 10; i += 1) {
       it(`button ${i} for negative 0`, async () => {
         const { user } = renderWithUser(<App />);
-        await user.click(screen.getByRole('button', { name: '0' }));
-        await user.click(
-          screen.getByRole('button', { name: "change number's sign" }),
-        );
 
-        await user.click(screen.getByRole('button', { name: String(i) }));
+        await clickButtons(user, ['0', "change number's sign", String(i)]);
 
         expectDisplayValueToBe(`-${String(i)}`);
       });
@@ -56,9 +49,7 @@ describe('Entering values', () => {
   it('should allow the user to enter a floating point number', async () => {
     const { user } = renderWithUser(<App />);
 
-    await user.click(screen.getByRole('button', { name: '5' }));
-    await user.click(screen.getByRole('button', { name: 'dot' }));
-    await user.click(screen.getByRole('button', { name: '2' }));
+    await clickButtons(user, ['5', 'dot', '2']);
 
     expectDisplayValueToBe('5.2');
   });
@@ -66,12 +57,8 @@ describe('Entering values', () => {
   it('should allow the user to enter a maximum of 3 digits after the dot', async () => {
     const { user } = renderWithUser(<App />);
 
-    await user.click(screen.getByRole('button', { name: '7' }));
-    await user.click(screen.getByRole('button', { name: 'dot' }));
-
-    for (let i = 0; i < 5; i += 1) {
-      await user.click(screen.getByRole('button', { name: '1' }));
-    }
+    await clickButtons(user, ['7', 'dot']);
+    await clickButtons(user, Array<string>(5).fill('1'));
 
     expectDisplayValueToBe('7.111');
   });

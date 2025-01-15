@@ -1,7 +1,5 @@
-import { screen } from '@testing-library/react';
-
 import App from '@/App';
-import { expectDisplayValueToBe, renderWithUser } from '@/tests';
+import { clickButtons, expectDisplayValueToBe, renderWithUser } from '@/tests';
 
 describe('Operations', () => {
   const operations = ['plus', 'minus', 'divide', 'multiply'];
@@ -10,9 +8,8 @@ describe('Operations', () => {
     for (const operation of operations) {
       it(`${operation} button`, async () => {
         const { user } = renderWithUser(<App />);
-        await user.click(screen.getByRole('button', { name: '5' }));
 
-        await user.click(screen.getByRole('button', { name: operation }));
+        await clickButtons(user, ['5', operation]);
 
         expectDisplayValueToBe('');
       });
@@ -25,11 +22,8 @@ describe('Operations', () => {
     for (let i = 0; i < operations.length; i += 1) {
       it(`${operations[i]} operation`, async () => {
         const { user } = renderWithUser(<App />);
-        await user.click(screen.getByRole('button', { name: '8' }));
-        await user.click(screen.getByRole('button', { name: operations[i] }));
-        await user.click(screen.getByRole('button', { name: '2' }));
 
-        await user.click(screen.getByRole('button', { name: 'equal' }));
+        await clickButtons(user, ['8', operations[i], '2', 'equal']);
 
         expectDisplayValueToBe(expectedResults[i]);
       });
@@ -43,14 +37,15 @@ describe('Operations', () => {
       it(`${operations[i]} operation`, async () => {
         const { user } = renderWithUser(<App />);
 
-        await user.click(screen.getByRole('button', { name: '8' }));
-        await user.click(screen.getByRole('button', { name: operations[i] }));
-        await user.click(screen.getByRole('button', { name: '2' }));
-        await user.click(screen.getByRole('button', { name: 'equal' }));
-
-        await user.click(screen.getByRole('button', { name: operations[i] }));
-        await user.click(screen.getByRole('button', { name: '4' }));
-        await user.click(screen.getByRole('button', { name: 'equal' }));
+        await clickButtons(user, [
+          '8',
+          operations[i],
+          '2',
+          'equal',
+          operations[i],
+          '4',
+          'equal',
+        ]);
 
         expectDisplayValueToBe(expectedResults[i]);
       });
@@ -60,21 +55,16 @@ describe('Operations', () => {
   it('should display ERR if the result exceeds the 8 digit maximum', async () => {
     const { user } = renderWithUser(<App />);
 
-    for (let i = 0; i < 8; i += 1) {
-      await user.click(screen.getByRole('button', { name: '9' }));
-    }
-
-    await user.click(screen.getByRole('button', { name: 'plus' }));
-    await user.click(screen.getByRole('button', { name: '1' }));
-
-    await user.click(screen.getByRole('button', { name: 'equal' }));
+    await clickButtons(user, Array<string>(8).fill('9'));
+    await clickButtons(user, ['plus', '1', 'equal']);
 
     expectDisplayValueToBe('ERR');
   });
 
   it('should limit the decimal part of the result to 3 digits', async () => {
     const { user } = renderWithUser(<App />);
-    const orderedButtonsNames = [
+
+    await clickButtons(user, [
       '0',
       'dot',
       '0',
@@ -87,11 +77,7 @@ describe('Operations', () => {
       '0',
       '8',
       'equal',
-    ];
-
-    for (const name of orderedButtonsNames) {
-      await user.click(screen.getByRole('button', { name }));
-    }
+    ]);
 
     expectDisplayValueToBe('0.009');
   });

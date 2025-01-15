@@ -1,7 +1,8 @@
 import {
+  clickButtons,
   expectDisplayValueToBe,
   getDisplay,
   renderWithUser,
 } from '@/tests/utils';
 
-export { expectDisplayValueToBe, getDisplay, renderWithUser };
+export { clickButtons, expectDisplayValueToBe, getDisplay, renderWithUser };

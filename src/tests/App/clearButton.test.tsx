@@ -1,15 +1,11 @@
-import { screen } from '@testing-library/react';
-
 import App from '@/App';
-import { expectDisplayValueToBe, renderWithUser } from '@/tests';
+import { clickButtons, expectDisplayValueToBe, renderWithUser } from '@/tests';
 
 describe('Clear button', () => {
   it('should clear the display', async () => {
     const { user } = renderWithUser(<App />);
-    await user.click(screen.getByRole('button', { name: '3' }));
-    await user.click(screen.getByRole('button', { name: '1' }));
 
-    await user.click(screen.getByRole('button', { name: 'clear' }));
+    await clickButtons(user, ['3', '1', 'clear']);
 
     expectDisplayValueToBe('');
   });
@@ -20,10 +16,8 @@ describe('Clear button', () => {
     for (const operation of operations) {
       it(`${operation} operation`, async () => {
         const { user } = renderWithUser(<App />);
-        await user.click(screen.getByRole('button', { name: '5' }));
-        await user.click(screen.getByRole('button', { name: operation }));
 
-        await user.click(screen.getByRole('button', { name: 'clear' }));
+        await clickButtons(user, ['5', operation, 'clear']);
 
         expectDisplayValueToBe('5');
       });

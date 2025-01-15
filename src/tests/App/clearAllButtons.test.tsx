@@ -1,15 +1,11 @@
-import { screen } from '@testing-library/react';
-
 import App from '@/App';
-import { expectDisplayValueToBe, renderWithUser } from '@/tests';
+import { clickButtons, expectDisplayValueToBe, renderWithUser } from '@/tests';
 
 describe('Clear all button', () => {
   it('should display 0 on the display', async () => {
     const { user } = renderWithUser(<App />);
-    await user.click(screen.getByRole('button', { name: '8' }));
-    await user.click(screen.getByRole('button', { name: '3' }));
 
-    await user.click(screen.getByRole('button', { name: 'clear all' }));
+    await clickButtons(user, ['8', '3', 'clear all']);
 
     expectDisplayValueToBe('0');
   });
@@ -17,13 +13,7 @@ describe('Clear all button', () => {
   it('should erase the previous number/result', async () => {
     const { user } = renderWithUser(<App />);
 
-    await user.click(screen.getByRole('button', { name: '9' }));
-    await user.click(screen.getByRole('button', { name: 'plus' }));
-
-    await user.click(screen.getByRole('button', { name: 'clear all' }));
-
-    await user.click(screen.getByRole('button', { name: '3' }));
-    await user.click(screen.getByRole('button', { name: 'equal' }));
+    await clickButtons(user, ['9', 'plus', 'clear all', '3', 'equal']);
 
     expectDisplayValueToBe('3');
   });
