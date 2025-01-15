@@ -3,6 +3,8 @@ import {
   clickButtons,
   expectDisplayValueToBe,
   getDisplay,
+  numberToButtonSequence,
+  performOperation,
   renderWithUser,
 } from '@/tests/utils';
 
@@ -11,5 +13,7 @@ export {
   clickButtons,
   expectDisplayValueToBe,
   getDisplay,
+  numberToButtonSequence,
+  performOperation,
   renderWithUser,
 };

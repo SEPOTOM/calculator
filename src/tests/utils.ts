@@ -51,3 +51,33 @@ export const OPERATIONS = {
     calculateResult: (a: number, b: number) => a * b,
   },
 } as const;
+
+export const numberToButtonSequence = (numberStr: string): string[] =>
+  numberStr.split('').map((char) => {
+    if (char === '.') {
+      return 'dot';
+    }
+
+    if (char === '-') {
+      return "change number's sign";
+    }
+
+    return char;
+  });
+
+export const performOperation = async (
+  user: UserEvent,
+  firstNumber: string,
+  operation: keyof typeof OPERATIONS,
+  secondNumber: string,
+) => {
+  const firstNumberSequence = numberToButtonSequence(firstNumber);
+  const secondNumberSequence = numberToButtonSequence(secondNumber);
+
+  await clickButtons(user, [
+    ...firstNumberSequence,
+    OPERATIONS[operation].name,
+    ...secondNumberSequence,
+    'equal',
+  ]);
+};

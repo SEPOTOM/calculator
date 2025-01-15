@@ -3,6 +3,7 @@ import {
   OPERATIONS,
   clickButtons,
   expectDisplayValueToBe,
+  performOperation,
   renderWithUser,
 } from '@/tests';
 
@@ -24,7 +25,7 @@ describe('Operations', () => {
       it(`${name} operation`, async () => {
         const { user } = renderWithUser(<App />);
 
-        await clickButtons(user, ['8', name, '2', 'equal']);
+        await performOperation(user, '8', name, '2');
 
         expectDisplayValueToBe(String(calculateResult(8, 2)));
       });
@@ -36,7 +37,8 @@ describe('Operations', () => {
       it(`${name} operation`, async () => {
         const { user } = renderWithUser(<App />);
 
-        await clickButtons(user, ['8', name, '2', 'equal', name, '4', 'equal']);
+        await performOperation(user, '8', name, '2');
+        await clickButtons(user, [name, '4', 'equal']);
 
         const firstResult = calculateResult(8, 2);
         const secondResult = calculateResult(firstResult, 4);
@@ -49,8 +51,7 @@ describe('Operations', () => {
   it('should display ERR if the result exceeds the 8 digit maximum', async () => {
     const { user } = renderWithUser(<App />);
 
-    await clickButtons(user, Array<string>(8).fill('9'));
-    await clickButtons(user, ['plus', '1', 'equal']);
+    await performOperation(user, '9'.repeat(8), 'plus', '1');
 
     expectDisplayValueToBe('ERR');
   });
@@ -58,20 +59,7 @@ describe('Operations', () => {
   it('should limit the decimal part of the result to 3 digits', async () => {
     const { user } = renderWithUser(<App />);
 
-    await clickButtons(user, [
-      '0',
-      'dot',
-      '0',
-      '0',
-      '1',
-      'plus',
-      '0',
-      'dot',
-      '0',
-      '0',
-      '8',
-      'equal',
-    ]);
+    await performOperation(user, '0.001', 'plus', '0.008');
 
     expectDisplayValueToBe('0.009');
   });
