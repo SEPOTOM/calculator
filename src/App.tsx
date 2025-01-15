@@ -6,7 +6,7 @@ import { performCalculation } from '@/utils';
 const DIGITS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 
 const App = () => {
-  const [currentNumberStr, setCurrentNumberStr] = useState('');
+  const [currentNumberStr, setCurrentNumberStr] = useState('0');
   const [prevNumber, setPrevNumber] = useState<Nullable<number>>(null);
   const [lastOperation, setLastOperation] = useState('');
 
