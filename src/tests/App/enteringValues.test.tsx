@@ -32,7 +32,7 @@ describe('Entering values', () => {
 
   describe('should replace the single 0 with the corresponding digit on a digit button click', () => {
     for (let i = 0; i < 10; i += 1) {
-      it(`button ${i}`, async () => {
+      it(`button ${i} for positive 0`, async () => {
         const { user } = renderWithUser(<App />);
         await user.click(screen.getByRole('button', { name: '0' }));
 
@@ -41,6 +41,22 @@ describe('Entering values', () => {
         expect(
           screen.getByRole('alert', { name: /display/i }),
         ).toHaveDisplayValue(String(i));
+      });
+    }
+
+    for (let i = 0; i < 10; i += 1) {
+      it(`button ${i} for negative 0`, async () => {
+        const { user } = renderWithUser(<App />);
+        await user.click(screen.getByRole('button', { name: '0' }));
+        await user.click(
+          screen.getByRole('button', { name: "change number's sign" }),
+        );
+
+        await user.click(screen.getByRole('button', { name: String(i) }));
+
+        expect(
+          screen.getByRole('alert', { name: /display/i }),
+        ).toHaveDisplayValue(`-${String(i)}`);
       });
     }
   });
