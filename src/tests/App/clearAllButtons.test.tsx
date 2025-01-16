@@ -1,5 +1,6 @@
 import App from '@/App';
 import {
+  clearAll,
   clickButtons,
   enterNumber,
   expectDisplayValueToBe,
@@ -11,7 +12,7 @@ describe('Clear all button', () => {
     const { user } = renderWithUser(<App />);
 
     await enterNumber(user, '83');
-    await clickButtons(user, ['clear all']);
+    await clearAll(user);
 
     expectDisplayValueToBe('0');
   });
@@ -20,7 +21,8 @@ describe('Clear all button', () => {
     const { user } = renderWithUser(<App />);
 
     await enterNumber(user, '9');
-    await clickButtons(user, ['plus', 'clear all']);
+    await clickButtons(user, ['plus']);
+    await clearAll(user);
     await enterNumber(user, '3');
     await clickButtons(user, ['equal']);
 

@@ -95,3 +95,7 @@ export const changeSign = async (user: UserEvent) => {
 export const clear = async (user: UserEvent) => {
   await user.click(screen.getByRole('button', { name: 'clear' }));
 };
+
+export const clearAll = async (user: UserEvent) => {
+  await user.click(screen.getByRole('button', { name: 'clear all' }));
+};
