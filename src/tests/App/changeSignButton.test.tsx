@@ -7,9 +7,9 @@ import {
 } from '@/tests';
 
 describe('Change sign button', () => {
-  describe('should change the sign of the entered number', () => {
+  describe('number sign toggling', () => {
     for (let i = 0; i < 10; i += 1) {
-      it(`button ${i} to negative`, async () => {
+      it(`should change ${i} to negative`, async () => {
         const { user } = renderWithUser(<App />);
 
         await enterNumber(user, String(i));
@@ -20,7 +20,7 @@ describe('Change sign button', () => {
     }
 
     for (let i = 0; i < 10; i += 1) {
-      it(`button ${i} to positive`, async () => {
+      it(`should change ${i} back to positive`, async () => {
         const { user } = renderWithUser(<App />);
 
         await enterNumber(user, String(i));
