@@ -9,13 +9,13 @@ import {
 } from '@/tests';
 
 describe('Clear button', () => {
-  it('should clear the display', async () => {
+  it('should reset display to 0', async () => {
     const { user } = renderWithUser(<App />);
     await enterNumber(user, '31');
 
     await clear(user);
 
-    expectDisplayValueToBe('');
+    expectDisplayValueToBe('0');
   });
 
   describe('operation states', () => {
