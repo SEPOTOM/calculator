@@ -11,26 +11,28 @@ const App = () => {
   const [lastOperation, setLastOperation] = useState('');
 
   const handleDigitButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
-    if (currentNumberStr.length < 8) {
-      const [_, decimalPart] = currentNumberStr.split('.');
+    const [integerPart, decimalPart] = currentNumberStr.split('.');
 
-      if (decimalPart && decimalPart.length === 3) {
-        return;
+    if (decimalPart && decimalPart.length === 3) {
+      return;
+    }
+
+    if (decimalPart === undefined && integerPart.length === 8) {
+      return;
+    }
+
+    const newDigit = e.currentTarget.textContent;
+    setCurrentNumberStr((cn) => {
+      if (cn === '0') {
+        return newDigit ?? '';
       }
 
-      const newDigit = e.currentTarget.textContent;
-      setCurrentNumberStr((cn) => {
-        if (cn === '0') {
-          return newDigit ?? '';
-        }
+      if (cn === '-0') {
+        return `-${newDigit}`;
+      }
 
-        if (cn === '-0') {
-          return `-${newDigit}`;
-        }
-
-        return `${cn}${newDigit}`;
-      });
-    }
+      return `${cn}${newDigit}`;
+    });
   };
 
   const handleOperationButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
