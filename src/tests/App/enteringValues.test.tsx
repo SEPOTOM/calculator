@@ -1,5 +1,6 @@
 import App from '@/App';
 import { clickButtons, expectDisplayValueToBe, renderWithUser } from '@/tests';
+import { DECIMAL_PART_LIMIT, INTEGER_PART_LIMIT } from '@/utils';
 
 describe('Entering values', () => {
   describe('should display the corresponding digits on a digit button click', () => {
@@ -14,7 +15,7 @@ describe('Entering values', () => {
     }
   });
 
-  it('should allow the user to enter a sequence of digits with a max length of 8', async () => {
+  it(`should allow the user to enter a sequence of digits with a max length of ${INTEGER_PART_LIMIT}`, async () => {
     const { user } = renderWithUser(<App />);
 
     for (let i = 9; i >= 0; i -= 1) {
@@ -54,7 +55,7 @@ describe('Entering values', () => {
     expectDisplayValueToBe('5.2');
   });
 
-  it('should allow the user to enter a maximum of 3 digits after the dot', async () => {
+  it(`should allow the user to enter a maximum of ${DECIMAL_PART_LIMIT} digits after the dot`, async () => {
     const { user } = renderWithUser(<App />);
 
     await clickButtons(user, ['7', 'dot']);
@@ -75,9 +76,9 @@ describe('Entering values', () => {
     const { user } = renderWithUser(<App />);
 
     await clickButtons(user, [
-      ...Array<string>(8).fill('9'),
+      ...Array<string>(INTEGER_PART_LIMIT).fill('9'),
       'dot',
-      ...Array<string>(3).fill('9'),
+      ...Array<string>(DECIMAL_PART_LIMIT).fill('9'),
     ]);
 
     expectDisplayValueToBe('99999999.999');

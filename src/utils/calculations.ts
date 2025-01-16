@@ -1,3 +1,5 @@
+import { DECIMAL_PART_LIMIT } from '@/utils/consts';
+
 export const performCalculation = (
   firstNumber: string | number,
   secondNumber: string | number,
@@ -27,5 +29,5 @@ export const performCalculation = (
     }
   }
 
-  return String(Number(result.toFixed(3)));
+  return String(Number(result.toFixed(DECIMAL_PART_LIMIT)));
 };

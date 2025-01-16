@@ -1,7 +1,11 @@
 import { MouseEvent, useState } from 'react';
 
 import { Button } from '@/components';
-import { performCalculation } from '@/utils';
+import {
+  DECIMAL_PART_LIMIT,
+  INTEGER_PART_LIMIT,
+  performCalculation,
+} from '@/utils';
 
 const DIGITS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 
@@ -13,11 +17,14 @@ const App = () => {
   const handleDigitButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
     const [integerPart, decimalPart] = currentNumberStr.split('.');
 
-    if (decimalPart && decimalPart.length === 3) {
+    if (decimalPart && decimalPart.length === DECIMAL_PART_LIMIT) {
       return;
     }
 
-    if (decimalPart === undefined && integerPart.length === 8) {
+    if (
+      decimalPart === undefined &&
+      integerPart.length === INTEGER_PART_LIMIT
+    ) {
       return;
     }
 
@@ -54,9 +61,12 @@ const App = () => {
 
     const [integerPart, decimalPart] = result.split('.');
 
-    if (decimalPart && decimalPart.length > 3) {
+    if (decimalPart && decimalPart.length > DECIMAL_PART_LIMIT) {
       setCurrentNumberStr('ERR');
-    } else if (decimalPart === undefined && integerPart.length > 8) {
+    } else if (
+      decimalPart === undefined &&
+      integerPart.length > INTEGER_PART_LIMIT
+    ) {
       setCurrentNumberStr('ERR');
     } else {
       setCurrentNumberStr(result);
