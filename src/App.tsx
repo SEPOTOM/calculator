@@ -32,8 +32,19 @@ const App = () => {
   };
 
   const handleOperationButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
+    if (lastOperation && prevNumber !== null) {
+      const result = performCalculation(
+        prevNumber,
+        currentNumberStr,
+        lastOperation,
+      );
+
+      setPrevNumber(Number(result));
+    } else {
+      setPrevNumber(Number(currentNumberStr));
+    }
+
     setCurrentNumberStr('0');
-    setPrevNumber(Number(currentNumberStr));
     setLastOperation(e.currentTarget.textContent ?? '');
   };
 
@@ -53,6 +64,8 @@ const App = () => {
     } else {
       setCurrentNumberStr('ERR');
     }
+
+    setLastOperation('');
   };
 
   const handleClearButtonClick = () => {
