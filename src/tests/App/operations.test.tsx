@@ -10,11 +10,11 @@ import { DECIMAL_PART_LIMIT, INTEGER_PART_LIMIT } from '@/utils';
 
 describe('Operations', () => {
   describe('Operation button behavior', () => {
-    Object.values(OPERATIONS).forEach(({ name }) => {
-      it(`should clear display after ${name} with no previous number`, async () => {
+    Object.keys(OPERATIONS).forEach((operation) => {
+      it(`should clear display after ${operation} with no previous number`, async () => {
         const { user } = renderWithUser(<App />);
 
-        await clickButtons(user, ['5', name]);
+        await clickButtons(user, ['5', operation]);
 
         expectDisplayValueToBe('');
       });
@@ -42,9 +42,9 @@ describe('Operations', () => {
         await clickButtons(user, [name, '4', 'equal']);
 
         const firstResult = calculateResult(8, 2);
-        const secondResult = calculateResult(firstResult, 4);
+        const expectedResult = calculateResult(firstResult, 4).toString();
 
-        expectDisplayValueToBe(String(secondResult));
+        expectDisplayValueToBe(expectedResult);
       });
     });
   });
