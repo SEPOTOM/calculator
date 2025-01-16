@@ -62,4 +62,12 @@ describe('Entering values', () => {
 
     expectDisplayValueToBe('7.111');
   });
+
+  it('should prohibit the user from entering multiple dots in the same number', async () => {
+    const { user } = renderWithUser(<App />);
+
+    await clickButtons(user, ['8', 'dot', 'dot', 'dot', '1']);
+
+    expectDisplayValueToBe('8.1');
+  });
 });
