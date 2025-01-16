@@ -37,7 +37,7 @@ describe('Operations', () => {
 
   describe('Chained operations', () => {
     Object.values(OPERATIONS).forEach(({ name, calculateResult }) => {
-      it(`should chain ${name} operations correctly`, async () => {
+      it(`should chain ${name} operations separated by equal button clicks correctly`, async () => {
         const { user } = renderWithUser(<App />);
 
         await performOperation(user, '8', name, '2');
@@ -47,6 +47,23 @@ describe('Operations', () => {
 
         const firstResult = calculateResult(8, 2);
         const expectedResult = calculateResult(firstResult, 4).toString();
+
+        expectDisplayValueToBe(expectedResult);
+      });
+
+      it(`should chain continual ${name} operations correctly`, async () => {
+        const { user } = renderWithUser(<App />);
+
+        await performOperation(user, '8', name, '2');
+        await clickButtons(user, [name]);
+        await enterNumber(user, '4');
+        await clickButtons(user, [name]);
+        await enterNumber(user, '4');
+        await clickButtons(user, ['equal']);
+
+        const firstResult = calculateResult(8, 2);
+        const secondResult = calculateResult(firstResult, 4);
+        const expectedResult = calculateResult(secondResult, 4).toString();
 
         expectDisplayValueToBe(expectedResult);
       });
