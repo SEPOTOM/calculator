@@ -1,12 +1,12 @@
 import { MouseEvent, useState } from 'react';
 
 import { Button, Display } from '@/components';
-import { isValidNumber, performCalculation } from '@/utils';
+import { SPECIAL_VALUES, isValidNumber, performCalculation } from '@/utils';
 
 const DIGITS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 
 const App = () => {
-  const [currentValue, setCurrentValue] = useState<string>('0');
+  const [currentValue, setCurrentValue] = useState<string>(SPECIAL_VALUES.ZERO);
   const [prevValue, setPrevValue] = useState<string>('');
   const [lastOperation, setLastOperation] = useState('');
 
@@ -14,12 +14,12 @@ const App = () => {
     const newDigit = e.currentTarget.textContent ?? '';
 
     switch (currentValue) {
-      case 'ERR':
-      case '0': {
+      case SPECIAL_VALUES.ERROR:
+      case SPECIAL_VALUES.ZERO: {
         setCurrentValue(newDigit);
         return;
       }
-      case '-0': {
+      case SPECIAL_VALUES.NEGATIVE_ZERO: {
         setCurrentValue(`-${newDigit}`);
         return;
       }
@@ -41,7 +41,7 @@ const App = () => {
       setPrevValue(currentValue);
     }
 
-    setCurrentValue('0');
+    setCurrentValue(SPECIAL_VALUES.ZERO);
     setLastOperation(e.currentTarget.textContent ?? '');
   };
 
@@ -62,18 +62,18 @@ const App = () => {
   };
 
   const handleClearButtonClick = () => {
-    if (currentValue !== '0') {
-      setCurrentValue('0');
+    if (currentValue !== SPECIAL_VALUES.ZERO) {
+      setCurrentValue(SPECIAL_VALUES.ZERO);
     } else if (lastOperation !== '') {
       setCurrentValue(prevValue);
       setLastOperation('');
     } else {
-      setCurrentValue('0');
+      setCurrentValue(SPECIAL_VALUES.ZERO);
     }
   };
 
   const handleClearAllButtonClick = () => {
-    setCurrentValue('0');
+    setCurrentValue(SPECIAL_VALUES.ZERO);
     setPrevValue('');
   };
 
@@ -89,7 +89,7 @@ const App = () => {
   };
 
   const handleDotButtonClick = () => {
-    if (!currentValue.includes('.') && currentValue !== 'ERR') {
+    if (!currentValue.includes('.') && currentValue !== SPECIAL_VALUES.ERROR) {
       setCurrentValue((cv) => `${cv}.`);
     }
   };
