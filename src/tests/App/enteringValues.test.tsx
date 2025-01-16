@@ -8,9 +8,9 @@ import {
 import { DECIMAL_PART_LIMIT, INTEGER_PART_LIMIT } from '@/utils';
 
 describe('Entering values', () => {
-  describe('should display the corresponding digits on a digit button click', () => {
+  describe('single digit entry', () => {
     for (let i = 0; i < 10; i += 1) {
-      it(`button ${i}`, async () => {
+      it(`should display ${i} when clicked`, async () => {
         const { user } = renderWithUser(<App />);
 
         await enterNumber(user, String(i));
@@ -20,7 +20,7 @@ describe('Entering values', () => {
     }
   });
 
-  it(`should allow the user to enter a sequence of digits with a max length of ${INTEGER_PART_LIMIT}`, async () => {
+  it(`should limit input's integer part to  ${INTEGER_PART_LIMIT} digits`, async () => {
     const { user } = renderWithUser(<App />);
 
     for (let i = 9; i >= 0; i -= 1) {
@@ -30,9 +30,9 @@ describe('Entering values', () => {
     expectDisplayValueToBe('98765432');
   });
 
-  describe('should replace the single 0 with the corresponding digit on a digit button click', () => {
+  describe('zero replacement', () => {
     for (let i = 0; i < 10; i += 1) {
-      it(`button ${i} for positive 0`, async () => {
+      it(`should replace positive zero with ${i}`, async () => {
         const { user } = renderWithUser(<App />);
 
         await enterNumber(user, `0${String(i)}`);
@@ -42,7 +42,7 @@ describe('Entering values', () => {
     }
 
     for (let i = 0; i < 10; i += 1) {
-      it(`button ${i} for negative 0`, async () => {
+      it(`should replace negative zero with ${i}`, async () => {
         const { user } = renderWithUser(<App />);
 
         await changeSign(user);
@@ -53,7 +53,7 @@ describe('Entering values', () => {
     }
   });
 
-  it('should allow the user to enter a floating point number', async () => {
+  it('should allow entering decimal numbers', async () => {
     const { user } = renderWithUser(<App />);
 
     await enterNumber(user, '5.2');
@@ -61,7 +61,7 @@ describe('Entering values', () => {
     expectDisplayValueToBe('5.2');
   });
 
-  it(`should allow the user to enter a maximum of ${DECIMAL_PART_LIMIT} digits after the dot`, async () => {
+  it(`should limit decimal places to ${DECIMAL_PART_LIMIT} digits`, async () => {
     const { user } = renderWithUser(<App />);
 
     await enterNumber(user, '7.11111');
@@ -69,7 +69,7 @@ describe('Entering values', () => {
     expectDisplayValueToBe('7.111');
   });
 
-  it('should prohibit the user from entering multiple dots in the same number', async () => {
+  it('should prohibit entering multiple dots in the same number', async () => {
     const { user } = renderWithUser(<App />);
 
     await enterNumber(user, '8...1');
