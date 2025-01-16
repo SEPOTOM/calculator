@@ -89,7 +89,7 @@ const App = () => {
   };
 
   const handleDotButtonClick = () => {
-    if (!currentValue.includes('.')) {
+    if (!currentValue.includes('.') && currentValue !== 'ERR') {
       setCurrentValue((cv) => `${cv}.`);
     }
   };
