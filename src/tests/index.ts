@@ -1,6 +1,7 @@
 import {
   OPERATIONS,
   changeSign,
+  clear,
   clickButtons,
   enterNumber,
   expectDisplayValueToBe,
@@ -13,6 +14,7 @@ import {
 export {
   OPERATIONS,
   changeSign,
+  clear,
   clickButtons,
   enterNumber,
   expectDisplayValueToBe,
