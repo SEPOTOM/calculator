@@ -70,4 +70,16 @@ describe('Entering values', () => {
 
     expectDisplayValueToBe('8.1');
   });
+
+  it('should combine the integer and decimal limits resulting in a maximum of 11 digits in numbers', async () => {
+    const { user } = renderWithUser(<App />);
+
+    await clickButtons(user, [
+      ...Array<string>(8).fill('9'),
+      'dot',
+      ...Array<string>(3).fill('9'),
+    ]);
+
+    expectDisplayValueToBe('99999999.999');
+  });
 });
