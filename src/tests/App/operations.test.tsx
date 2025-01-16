@@ -12,13 +12,13 @@ import { DECIMAL_PART_LIMIT, INTEGER_PART_LIMIT } from '@/utils';
 describe('Operations', () => {
   describe('Operation button behavior', () => {
     Object.keys(OPERATIONS).forEach((operation) => {
-      it(`should clear display after ${operation} with no previous number`, async () => {
+      it(`should reset display to 0 after ${operation} with no previous number`, async () => {
         const { user } = renderWithUser(<App />);
 
         await enterNumber(user, '5');
         await clickButtons(user, [operation]);
 
-        expectDisplayValueToBe('');
+        expectDisplayValueToBe('0');
       });
     });
   });
