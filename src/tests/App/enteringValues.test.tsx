@@ -1,6 +1,6 @@
 import App from '@/App';
 import {
-  clickButtons,
+  changeSign,
   enterNumber,
   expectDisplayValueToBe,
   renderWithUser,
@@ -45,7 +45,7 @@ describe('Entering values', () => {
       it(`button ${i} for negative 0`, async () => {
         const { user } = renderWithUser(<App />);
 
-        await clickButtons(user, ["change number's sign"]);
+        await changeSign(user);
         await enterNumber(user, String(i));
 
         expectDisplayValueToBe(`-${String(i)}`);

@@ -1,6 +1,6 @@
 import App from '@/App';
 import {
-  clickButtons,
+  changeSign,
   enterNumber,
   expectDisplayValueToBe,
   renderWithUser,
@@ -13,7 +13,7 @@ describe('Change sign button', () => {
         const { user } = renderWithUser(<App />);
 
         await enterNumber(user, String(i));
-        await clickButtons(user, ["change number's sign"]);
+        await changeSign(user);
 
         expectDisplayValueToBe(`-${String(i)}`);
       });
@@ -24,10 +24,8 @@ describe('Change sign button', () => {
         const { user } = renderWithUser(<App />);
 
         await enterNumber(user, String(i));
-        await clickButtons(user, [
-          "change number's sign",
-          "change number's sign",
-        ]);
+        await changeSign(user);
+        await changeSign(user);
 
         expectDisplayValueToBe(String(i));
       });

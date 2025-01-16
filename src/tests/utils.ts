@@ -85,3 +85,9 @@ export const performOperation = async (
 export const enterNumber = async (user: UserEvent, number: string) => {
   await clickButtons(user, numberToButtonSequence(number));
 };
+
+export const changeSign = async (user: UserEvent) => {
+  await user.click(
+    screen.getByRole('button', { name: "change number's sign" }),
+  );
+};
