@@ -64,7 +64,7 @@ const App = () => {
     if (lastOperation !== '') {
       setCurrentValue(prevValue);
     } else {
-      setCurrentValue('');
+      setCurrentValue('0');
     }
   };
 
