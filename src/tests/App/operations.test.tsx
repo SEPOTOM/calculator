@@ -56,6 +56,14 @@ describe('Operations', () => {
     expectDisplayValueToBe('ERR');
   });
 
+  it("shouldn't display ERR if the both integer and decimal part don't exceed their limits", async () => {
+    const { user } = renderWithUser(<App />);
+
+    await performOperation(user, `${'9'.repeat(8)}.125`, 'plus', `0.130`);
+
+    expectDisplayValueToBe(`${'9'.repeat(8)}.255`);
+  });
+
   it('should limit the decimal part of the result to 3 digits', async () => {
     const { user } = renderWithUser(<App />);
 
