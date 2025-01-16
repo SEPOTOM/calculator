@@ -17,11 +17,11 @@ describe('Clear button', () => {
     expectDisplayValueToBe('');
   });
 
-  describe('should display the previous number after an operation button click', () => {
+  describe('operation states', () => {
     const operations = ['plus', 'minus', 'divide', 'multiply'];
 
     for (const operation of operations) {
-      it(`${operation} operation`, async () => {
+      it(`should restore previous number after an ${operation} button click`, async () => {
         const { user } = renderWithUser(<App />);
 
         await enterNumber(user, '5');
