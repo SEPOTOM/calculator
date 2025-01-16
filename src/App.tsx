@@ -14,6 +14,7 @@ const App = () => {
     const newDigit = e.currentTarget.textContent ?? '';
 
     switch (currentValue) {
+      case 'ERR':
       case '0': {
         setCurrentValue(newDigit);
         return;
