@@ -94,6 +94,49 @@ const App = () => {
     }
   };
 
+  const operationButtonsMetadata = [
+    {
+      label: "change number's sign",
+      symbol: '+/-',
+      handleClick: handleChangeSignButtonClick,
+    },
+    {
+      label: 'clear all',
+      symbol: 'AC',
+      handleClick: handleClearAllButtonClick,
+    },
+    {
+      label: 'clear',
+      symbol: 'C',
+      handleClick: handleClearButtonClick,
+    },
+    {
+      label: 'plus',
+      symbol: '+',
+      handleClick: handleOperationButtonClick,
+    },
+    {
+      label: 'minus',
+      symbol: '-',
+      handleClick: handleOperationButtonClick,
+    },
+    {
+      label: 'multiply',
+      symbol: '*',
+      handleClick: handleOperationButtonClick,
+    },
+    {
+      label: 'divide',
+      symbol: '/',
+      handleClick: handleOperationButtonClick,
+    },
+    {
+      label: 'equal',
+      symbol: '=',
+      handleClick: handleEqualButtonClick,
+    },
+  ];
+
   return (
     <div className="m-auto max-w-5xl p-3">
       <input
@@ -106,34 +149,18 @@ const App = () => {
       />
 
       <div className="grid grid-cols-4 grid-rows-5 gap-3">
-        <Button
-          aria-label="change number's sign"
-          variant="border"
-          onClick={handleChangeSignButtonClick}
-        >
-          +/-
-        </Button>
-        <Button
-          aria-label="clear all"
-          variant="border"
-          onClick={handleClearAllButtonClick}
-        >
-          AC
-        </Button>
-        <Button
-          aria-label="clear"
-          variant="border"
-          onClick={handleClearButtonClick}
-        >
-          C
-        </Button>
-        <Button
-          aria-label="plus"
-          variant="border"
-          onClick={handleOperationButtonClick}
-        >
-          +
-        </Button>
+        {operationButtonsMetadata
+          .slice(0, 4)
+          .map(({ label, symbol, handleClick }) => (
+            <Button
+              aria-label={label}
+              variant="border"
+              onClick={handleClick}
+              key={label}
+            >
+              {symbol}
+            </Button>
+          ))}
 
         <div className="col-span-3 row-span-4 grid grid-cols-3 grid-rows-4 gap-3">
           {DIGITS.map((digit, index) => (
@@ -156,34 +183,18 @@ const App = () => {
           </Button>
         </div>
 
-        <Button
-          aria-label="minus"
-          variant="border"
-          onClick={handleOperationButtonClick}
-        >
-          -
-        </Button>
-        <Button
-          aria-label="multiply"
-          variant="border"
-          onClick={handleOperationButtonClick}
-        >
-          *
-        </Button>
-        <Button
-          aria-label="divide"
-          variant="border"
-          onClick={handleOperationButtonClick}
-        >
-          /
-        </Button>
-        <Button
-          aria-label="equal"
-          variant="border"
-          onClick={handleEqualButtonClick}
-        >
-          =
-        </Button>
+        {operationButtonsMetadata
+          .slice(4)
+          .map(({ label, symbol, handleClick }) => (
+            <Button
+              aria-label={label}
+              variant="border"
+              onClick={handleClick}
+              key={label}
+            >
+              {symbol}
+            </Button>
+          ))}
       </div>
     </div>
   );
