@@ -1,3 +1,5 @@
+import { UserEvent } from '@testing-library/user-event';
+
 import App from '@/App';
 import {
   changeSign,
@@ -21,14 +23,12 @@ describe('Entering values', () => {
   });
 
   describe('length limitations', () => {
-    it(`should limit input's integer part to  ${INTEGER_PART_LIMIT} digits`, async () => {
+    it(`should limit input's integer part to ${INTEGER_PART_LIMIT} digits`, async () => {
       const { user } = renderWithUser(<App />);
 
-      for (let i = 9; i >= 0; i -= 1) {
-        await enterNumber(user, String(i));
-      }
+      await enterNumber(user, '1234567890');
 
-      expectDisplayValueToBe('98765432');
+      expectDisplayValueToBe('12345678');
     });
 
     it(`should limit decimal places to ${DECIMAL_PART_LIMIT} digits`, async () => {
@@ -52,26 +52,29 @@ describe('Entering values', () => {
   });
 
   describe('zero replacement', () => {
-    for (let i = 0; i < 10; i += 1) {
-      it(`should replace positive zero with ${i}`, async () => {
-        const { user } = renderWithUser(<App />);
+    const scenarios = [
+      { description: 'positive zero', setup: vi.fn() },
+      {
+        description: 'negative zero',
+        setup: async (user: UserEvent) => await changeSign(user),
+      },
+    ];
 
-        await enterNumber(user, `0${String(i)}`);
+    scenarios.forEach(({ description, setup }) => {
+      for (let i = 0; i < 10; i += 1) {
+        it(`should replace ${description} with ${i}`, async () => {
+          const digit = String(i);
+          const { user } = renderWithUser(<App />);
+          setup(user);
 
-        expectDisplayValueToBe(String(i));
-      });
-    }
+          await enterNumber(user, digit);
 
-    for (let i = 0; i < 10; i += 1) {
-      it(`should replace negative zero with ${i}`, async () => {
-        const { user } = renderWithUser(<App />);
-
-        await changeSign(user);
-        await enterNumber(user, String(i));
-
-        expectDisplayValueToBe(`-${String(i)}`);
-      });
-    }
+          expectDisplayValueToBe(
+            description === 'positive zero' ? digit : `-${digit}`,
+          );
+        });
+      }
+    });
   });
 
   describe('decimal numbers', () => {
