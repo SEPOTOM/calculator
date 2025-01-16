@@ -8,7 +8,7 @@ import {
 } from '@/tests';
 
 describe('Clear all button', () => {
-  it('should display 0 on the display', async () => {
+  it('should reset display to 0', async () => {
     const { user } = renderWithUser(<App />);
 
     await enterNumber(user, '83');
@@ -17,7 +17,7 @@ describe('Clear all button', () => {
     expectDisplayValueToBe('0');
   });
 
-  it('should erase the previous number/result', async () => {
+  it("should clear app's history", async () => {
     const { user } = renderWithUser(<App />);
 
     await enterNumber(user, '9');
