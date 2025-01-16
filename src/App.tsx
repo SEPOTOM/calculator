@@ -82,7 +82,9 @@ const App = () => {
   };
 
   const handleDotButtonClick = () => {
-    setCurrentNumberStr((cn) => `${cn}.`);
+    if (!currentNumberStr.includes('.')) {
+      setCurrentNumberStr((cn) => `${cn}.`);
+    }
   };
 
   return (
