@@ -3,6 +3,7 @@ import { UserEvent } from '@testing-library/user-event';
 import App from '@/App';
 import {
   changeSign,
+  clickButtons,
   enterNumber,
   expectDisplayValueToBe,
   performOperation,
@@ -112,6 +113,15 @@ describe('Entering values', () => {
       await enterNumber(user, '8...1');
 
       expectDisplayValueToBe('8.1');
+    });
+
+    it("shouldn't enter dot if display shows ERR", async () => {
+      const { user } = renderWithUser(<App />);
+      await performOperation(user, '9'.repeat(INTEGER_PART_LIMIT), 'plus', '1');
+
+      await clickButtons(user, ['dot']);
+
+      expectDisplayValueToBe('ERR');
     });
   });
 });
