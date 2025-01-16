@@ -6,63 +6,55 @@ import { isValidNumber, performCalculation } from '@/utils';
 const DIGITS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 
 const App = () => {
-  const [currentNumberStr, setCurrentNumberStr] = useState('0');
-  const [prevNumber, setPrevNumber] = useState<Nullable<number>>(null);
+  const [currentValue, setCurrentValue] = useState<string>('0');
+  const [prevValue, setPrevValue] = useState<string>('');
   const [lastOperation, setLastOperation] = useState('');
 
   const handleDigitButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
     const newDigit = e.currentTarget.textContent ?? '';
 
-    switch (currentNumberStr) {
+    switch (currentValue) {
       case '0': {
-        setCurrentNumberStr(newDigit);
+        setCurrentValue(newDigit);
         return;
       }
       case '-0': {
-        setCurrentNumberStr(`-${newDigit}`);
+        setCurrentValue(`-${newDigit}`);
         return;
       }
     }
 
-    const newNumber = `${currentNumberStr}${newDigit}`;
+    const newValue = `${currentValue}${newDigit}`;
 
-    if (isValidNumber(newNumber)) {
-      setCurrentNumberStr(newNumber);
+    if (isValidNumber(newValue)) {
+      setCurrentValue(newValue);
     }
   };
 
   const handleOperationButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
-    if (lastOperation && prevNumber !== null) {
-      const result = performCalculation(
-        prevNumber,
-        currentNumberStr,
-        lastOperation,
-      );
+    if (lastOperation && prevValue !== '') {
+      const result = performCalculation(prevValue, currentValue, lastOperation);
 
-      setPrevNumber(Number(result));
+      setPrevValue(result);
     } else {
-      setPrevNumber(Number(currentNumberStr));
+      setPrevValue(currentValue);
     }
 
-    setCurrentNumberStr('0');
+    setCurrentValue('0');
     setLastOperation(e.currentTarget.textContent ?? '');
   };
 
   const handleEqualButtonClick = () => {
-    if (!prevNumber) {
+    if (prevValue === '') {
       return;
     }
 
-    const result = performCalculation(
-      prevNumber,
-      currentNumberStr,
-      lastOperation,
-    );
+    const result = performCalculation(prevValue, currentValue, lastOperation);
 
     if (isValidNumber(result)) {
-      setCurrentNumberStr(result);
+      setCurrentValue(result);
     } else {
-      setCurrentNumberStr('ERR');
+      setCurrentValue('ERR');
     }
 
     setLastOperation('');
@@ -70,31 +62,31 @@ const App = () => {
 
   const handleClearButtonClick = () => {
     if (lastOperation !== '') {
-      setCurrentNumberStr(String(prevNumber));
+      setCurrentValue(prevValue);
     } else {
-      setCurrentNumberStr('');
+      setCurrentValue('');
     }
   };
 
   const handleClearAllButtonClick = () => {
-    setCurrentNumberStr('0');
-    setPrevNumber(null);
+    setCurrentValue('0');
+    setPrevValue('');
   };
 
   const handleChangeSignButtonClick = () => {
-    const currentNumber = Number(currentNumberStr);
-    const absCurrentNumber = Math.abs(currentNumber);
+    const currentValueNum = Number(currentValue);
+    const absCurrentNumber = Math.abs(currentValueNum);
 
-    if (Object.is(absCurrentNumber, currentNumber)) {
-      setCurrentNumberStr(`-${currentNumber}`);
+    if (Object.is(absCurrentNumber, currentValueNum)) {
+      setCurrentValue(`-${absCurrentNumber}`);
     } else {
-      setCurrentNumberStr(`${absCurrentNumber}`);
+      setCurrentValue(`${absCurrentNumber}`);
     }
   };
 
   const handleDotButtonClick = () => {
-    if (!currentNumberStr.includes('.')) {
-      setCurrentNumberStr((cn) => `${cn}.`);
+    if (!currentValue.includes('.')) {
+      setCurrentValue((cv) => `${cv}.`);
     }
   };
 
@@ -103,7 +95,7 @@ const App = () => {
       <input
         role="alert"
         type="text"
-        value={currentNumberStr}
+        value={currentValue}
         readOnly
         aria-label="Calculator display"
         className="outline-focus mb-6 w-full max-w-full rounded-sm bg-main px-2 py-3 text-right font-mono text-5xl tracking-wider text-secondary sm:mb-9"
