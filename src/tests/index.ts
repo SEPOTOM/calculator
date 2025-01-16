@@ -1,6 +1,7 @@
 import {
   OPERATIONS,
   clickButtons,
+  enterNumber,
   expectDisplayValueToBe,
   getDisplay,
   numberToButtonSequence,
@@ -11,6 +12,7 @@ import {
 export {
   OPERATIONS,
   clickButtons,
+  enterNumber,
   expectDisplayValueToBe,
   getDisplay,
   numberToButtonSequence,

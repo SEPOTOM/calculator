@@ -1,11 +1,17 @@
 import App from '@/App';
-import { clickButtons, expectDisplayValueToBe, renderWithUser } from '@/tests';
+import {
+  clickButtons,
+  enterNumber,
+  expectDisplayValueToBe,
+  renderWithUser,
+} from '@/tests';
 
 describe('Clear all button', () => {
   it('should display 0 on the display', async () => {
     const { user } = renderWithUser(<App />);
 
-    await clickButtons(user, ['8', '3', 'clear all']);
+    await enterNumber(user, '83');
+    await clickButtons(user, ['clear all']);
 
     expectDisplayValueToBe('0');
   });
@@ -13,7 +19,10 @@ describe('Clear all button', () => {
   it('should erase the previous number/result', async () => {
     const { user } = renderWithUser(<App />);
 
-    await clickButtons(user, ['9', 'plus', 'clear all', '3', 'equal']);
+    await enterNumber(user, '9');
+    await clickButtons(user, ['plus', 'clear all']);
+    await enterNumber(user, '3');
+    await clickButtons(user, ['equal']);
 
     expectDisplayValueToBe('3');
   });

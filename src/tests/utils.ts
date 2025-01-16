@@ -81,3 +81,7 @@ export const performOperation = async (
     'equal',
   ]);
 };
+
+export const enterNumber = async (user: UserEvent, number: string) => {
+  await clickButtons(user, numberToButtonSequence(number));
+};

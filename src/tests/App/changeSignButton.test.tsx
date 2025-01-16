@@ -1,5 +1,10 @@
 import App from '@/App';
-import { clickButtons, expectDisplayValueToBe, renderWithUser } from '@/tests';
+import {
+  clickButtons,
+  enterNumber,
+  expectDisplayValueToBe,
+  renderWithUser,
+} from '@/tests';
 
 describe('Change sign button', () => {
   describe('should change the sign of the entered number', () => {
@@ -7,7 +12,8 @@ describe('Change sign button', () => {
       it(`button ${i} to negative`, async () => {
         const { user } = renderWithUser(<App />);
 
-        await clickButtons(user, [String(i), "change number's sign"]);
+        await enterNumber(user, String(i));
+        await clickButtons(user, ["change number's sign"]);
 
         expectDisplayValueToBe(`-${String(i)}`);
       });
@@ -17,8 +23,8 @@ describe('Change sign button', () => {
       it(`button ${i} to positive`, async () => {
         const { user } = renderWithUser(<App />);
 
+        await enterNumber(user, String(i));
         await clickButtons(user, [
-          String(i),
           "change number's sign",
           "change number's sign",
         ]);

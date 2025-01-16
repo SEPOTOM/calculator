@@ -1,11 +1,17 @@
 import App from '@/App';
-import { clickButtons, expectDisplayValueToBe, renderWithUser } from '@/tests';
+import {
+  clickButtons,
+  enterNumber,
+  expectDisplayValueToBe,
+  renderWithUser,
+} from '@/tests';
 
 describe('Clear button', () => {
   it('should clear the display', async () => {
     const { user } = renderWithUser(<App />);
 
-    await clickButtons(user, ['3', '1', 'clear']);
+    await enterNumber(user, '31');
+    await clickButtons(user, ['clear']);
 
     expectDisplayValueToBe('');
   });
@@ -17,7 +23,8 @@ describe('Clear button', () => {
       it(`${operation} operation`, async () => {
         const { user } = renderWithUser(<App />);
 
-        await clickButtons(user, ['5', operation, 'clear']);
+        await enterNumber(user, '5');
+        await clickButtons(user, [operation, 'clear']);
 
         expectDisplayValueToBe('5');
       });

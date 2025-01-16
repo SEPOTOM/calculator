@@ -2,6 +2,7 @@ import App from '@/App';
 import {
   OPERATIONS,
   clickButtons,
+  enterNumber,
   expectDisplayValueToBe,
   performOperation,
   renderWithUser,
@@ -14,7 +15,8 @@ describe('Operations', () => {
       it(`should clear display after ${operation} with no previous number`, async () => {
         const { user } = renderWithUser(<App />);
 
-        await clickButtons(user, ['5', operation]);
+        await enterNumber(user, '5');
+        await clickButtons(user, [operation]);
 
         expectDisplayValueToBe('');
       });
@@ -39,7 +41,9 @@ describe('Operations', () => {
         const { user } = renderWithUser(<App />);
 
         await performOperation(user, '8', name, '2');
-        await clickButtons(user, [name, '4', 'equal']);
+        await clickButtons(user, [name]);
+        await enterNumber(user, '4');
+        await clickButtons(user, ['equal']);
 
         const firstResult = calculateResult(8, 2);
         const expectedResult = calculateResult(firstResult, 4).toString();
