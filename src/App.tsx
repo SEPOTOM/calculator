@@ -1,11 +1,7 @@
 import { MouseEvent, useState } from 'react';
 
 import { Button } from '@/components';
-import {
-  DECIMAL_PART_LIMIT,
-  INTEGER_PART_LIMIT,
-  performCalculation,
-} from '@/utils';
+import { isValidNumber, performCalculation } from '@/utils';
 
 const DIGITS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 
@@ -15,31 +11,24 @@ const App = () => {
   const [lastOperation, setLastOperation] = useState('');
 
   const handleDigitButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
-    const [integerPart, decimalPart] = currentNumberStr.split('.');
+    const newDigit = e.currentTarget.textContent ?? '';
 
-    if (decimalPart && decimalPart.length === DECIMAL_PART_LIMIT) {
-      return;
+    switch (currentNumberStr) {
+      case '0': {
+        setCurrentNumberStr(newDigit);
+        return;
+      }
+      case '-0': {
+        setCurrentNumberStr(`-${newDigit}`);
+        return;
+      }
     }
 
-    if (
-      decimalPart === undefined &&
-      integerPart.length === INTEGER_PART_LIMIT
-    ) {
-      return;
+    const newNumber = `${currentNumberStr}${newDigit}`;
+
+    if (isValidNumber(newNumber)) {
+      setCurrentNumberStr(newNumber);
     }
-
-    const newDigit = e.currentTarget.textContent;
-    setCurrentNumberStr((cn) => {
-      if (cn === '0') {
-        return newDigit ?? '';
-      }
-
-      if (cn === '-0') {
-        return `-${newDigit}`;
-      }
-
-      return `${cn}${newDigit}`;
-    });
   };
 
   const handleOperationButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
@@ -59,17 +48,10 @@ const App = () => {
       lastOperation,
     );
 
-    const [integerPart, decimalPart] = result.split('.');
-
-    if (decimalPart && decimalPart.length > DECIMAL_PART_LIMIT) {
-      setCurrentNumberStr('ERR');
-    } else if (
-      decimalPart === undefined &&
-      integerPart.length > INTEGER_PART_LIMIT
-    ) {
-      setCurrentNumberStr('ERR');
-    } else {
+    if (isValidNumber(result)) {
       setCurrentNumberStr(result);
+    } else {
+      setCurrentNumberStr('ERR');
     }
   };
 
