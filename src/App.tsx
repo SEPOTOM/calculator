@@ -52,7 +52,11 @@ const App = () => {
       lastOperation,
     );
 
-    if (result.length > 8) {
+    const [integerPart, decimalPart] = result.split('.');
+
+    if (decimalPart && decimalPart.length > 3) {
+      setCurrentNumberStr('ERR');
+    } else if (decimalPart === undefined && integerPart.length > 8) {
       setCurrentNumberStr('ERR');
     } else {
       setCurrentNumberStr(result);
