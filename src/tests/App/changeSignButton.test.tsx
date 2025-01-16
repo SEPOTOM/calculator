@@ -8,27 +8,33 @@ import {
 
 describe('Change sign button', () => {
   describe('number sign toggling', () => {
-    for (let i = 0; i < 10; i += 1) {
-      it(`should change ${i} to negative`, async () => {
-        const { user } = renderWithUser(<App />);
+    const scenarios = [
+      {
+        description: 'to negative',
+        expectedSign: '-',
+        toggleCount: 1,
+      },
+      {
+        description: 'back to positive',
+        expectedSign: '',
+        toggleCount: 2,
+      },
+    ];
 
-        await enterNumber(user, String(i));
-        await changeSign(user);
+    scenarios.forEach(({ description, toggleCount, expectedSign }) => {
+      for (let i = 0; i < 10; i += 1) {
+        it(`should change ${i} ${description}`, async () => {
+          const digit = String(i);
+          const { user } = renderWithUser(<App />);
+          await enterNumber(user, digit);
 
-        expectDisplayValueToBe(`-${String(i)}`);
-      });
-    }
+          for (let i = 0; i < toggleCount; i += 1) {
+            await changeSign(user);
+          }
 
-    for (let i = 0; i < 10; i += 1) {
-      it(`should change ${i} back to positive`, async () => {
-        const { user } = renderWithUser(<App />);
-
-        await enterNumber(user, String(i));
-        await changeSign(user);
-        await changeSign(user);
-
-        expectDisplayValueToBe(String(i));
-      });
-    }
+          expectDisplayValueToBe(`${expectedSign}${digit}`);
+        });
+      }
+    });
   });
 });
