@@ -31,4 +31,21 @@ describe('Clear button', () => {
       });
     });
   });
+
+  describe('impact on operations', () => {
+    Object.values(OPERATIONS).forEach(({ name, calculateResult }) => {
+      it(`shouldn't impact on the result of ${name} operation`, async () => {
+        const { user } = renderWithUser(<App />);
+        await enterNumber(user, '50');
+        await clickButtons(user, [name]);
+
+        await clear(user);
+        await clickButtons(user, [name]);
+        await enterNumber(user, '2');
+        await clickButtons(user, ['equal']);
+
+        expectDisplayValueToBe(String(calculateResult(50, 2)));
+      });
+    });
+  });
 });
