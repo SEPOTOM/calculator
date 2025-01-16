@@ -61,7 +61,9 @@ const App = () => {
   };
 
   const handleClearButtonClick = () => {
-    if (lastOperation !== '') {
+    if (currentValue !== '0') {
+      setCurrentValue('0');
+    } else if (lastOperation !== '') {
       setCurrentValue(prevValue);
       setLastOperation('');
     } else {
