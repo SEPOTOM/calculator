@@ -29,6 +29,17 @@ describe('Clear button', () => {
 
         expectDisplayValueToBe('5');
       });
+
+      it(`should reset display to 0 after entering second number during ${operation} operation`, async () => {
+        const { user } = renderWithUser(<App />);
+        await enterNumber(user, '8');
+        await clickButtons(user, [operation]);
+        await enterNumber(user, '92');
+
+        await clear(user);
+
+        expectDisplayValueToBe('0');
+      });
     });
   });
 
