@@ -5,6 +5,7 @@ import {
   changeSign,
   enterNumber,
   expectDisplayValueToBe,
+  performOperation,
   renderWithUser,
 } from '@/tests';
 import { DECIMAL_PART_LIMIT, INTEGER_PART_LIMIT } from '@/utils';
@@ -75,6 +76,25 @@ describe('Entering values', () => {
         });
       }
     });
+  });
+
+  describe('ERR replacement', () => {
+    for (let i = 0; i < 10; i += 1) {
+      it(`should replace ERR with ${i}`, async () => {
+        const digit = String(i);
+        const { user } = renderWithUser(<App />);
+        await performOperation(
+          user,
+          '9'.repeat(INTEGER_PART_LIMIT),
+          'plus',
+          '1',
+        );
+
+        await enterNumber(user, digit);
+
+        expectDisplayValueToBe(digit);
+      });
+    }
   });
 
   describe('decimal numbers', () => {
