@@ -7,7 +7,7 @@ import {
 } from '@/tests';
 
 describe('Equal button', () => {
-  it("shouldn't update the display if there is no previous number", async () => {
+  it('should maintain display value when no operation is pending', async () => {
     const { user } = renderWithUser(<App />);
 
     await enterNumber(user, '9');
