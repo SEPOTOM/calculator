@@ -32,7 +32,7 @@ const App = () => {
   };
 
   const handleOperationButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
-    setCurrentNumberStr('');
+    setCurrentNumberStr('0');
     setPrevNumber(Number(currentNumberStr));
     setLastOperation(e.currentTarget.textContent ?? '');
   };
