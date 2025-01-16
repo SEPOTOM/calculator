@@ -9,9 +9,9 @@ import {
 import { DECIMAL_PART_LIMIT, INTEGER_PART_LIMIT } from '@/utils';
 
 describe('Operations', () => {
-  describe('should clear the display after the button click with no previous number', () => {
+  describe('Operation button behavior', () => {
     Object.values(OPERATIONS).forEach(({ name }) => {
-      it(`${name} button`, async () => {
+      it(`should clear display after ${name} with no previous number`, async () => {
         const { user } = renderWithUser(<App />);
 
         await clickButtons(user, ['5', name]);
@@ -21,9 +21,9 @@ describe('Operations', () => {
     });
   });
 
-  describe('should display the result after two entered numbers and an equal button click', () => {
+  describe('Basic operations', () => {
     Object.values(OPERATIONS).forEach(({ name, calculateResult }) => {
-      it(`${name} operation`, async () => {
+      it(`should correctly perform ${name}`, async () => {
         const { user } = renderWithUser(<App />);
 
         await performOperation(user, '8', name, '2');
@@ -33,9 +33,9 @@ describe('Operations', () => {
     });
   });
 
-  describe('should display the result of the previous result and a new number after an equal button click', () => {
+  describe('Chained operations', () => {
     Object.values(OPERATIONS).forEach(({ name, calculateResult }) => {
-      it(`${name} operation`, async () => {
+      it(`should chain ${name} operations correctly`, async () => {
         const { user } = renderWithUser(<App />);
 
         await performOperation(user, '8', name, '2');
@@ -49,7 +49,7 @@ describe('Operations', () => {
     });
   });
 
-  it(`should display ERR if the result exceeds the ${INTEGER_PART_LIMIT} digit maximum`, async () => {
+  it(`should display ERR if result's integer part exceeds ${INTEGER_PART_LIMIT} digits`, async () => {
     const { user } = renderWithUser(<App />);
 
     await performOperation(user, '9'.repeat(INTEGER_PART_LIMIT), 'plus', '1');
@@ -57,7 +57,7 @@ describe('Operations', () => {
     expectDisplayValueToBe('ERR');
   });
 
-  it("shouldn't display ERR if the both integer and decimal part don't exceed their limits", async () => {
+  it("shouldn't display ERR if both result's parts don't exceed their limits", async () => {
     const { user } = renderWithUser(<App />);
 
     await performOperation(
@@ -70,7 +70,7 @@ describe('Operations', () => {
     expectDisplayValueToBe(`${'9'.repeat(INTEGER_PART_LIMIT)}.255`);
   });
 
-  it(`should limit the decimal part of the result to ${DECIMAL_PART_LIMIT} digits`, async () => {
+  it(`should limit result's decimal part to ${DECIMAL_PART_LIMIT} digits`, async () => {
     const { user } = renderWithUser(<App />);
 
     await performOperation(user, '0.001', 'plus', '0.008');
