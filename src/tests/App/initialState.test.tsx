@@ -3,18 +3,18 @@ import { render, screen } from '@testing-library/react';
 import App from '@/App';
 import { expectDisplayValueToBe } from '@/tests/utils';
 
-describe('App in initial state', () => {
-  it('should display a display with a default value of 0', () => {
+describe('Initial calculator state', () => {
+  beforeEach(() => {
     render(<App />);
+  });
 
+  it('should display 0 by default', () => {
     expectDisplayValueToBe('0');
   });
 
-  describe('should display digit buttons', () => {
+  describe('digit buttons', () => {
     for (let i = 0; i < 10; i += 1) {
-      it(`button ${i}`, () => {
-        render(<App />);
-
+      it(`should display digit button ${i}`, () => {
         expect(
           screen.getByRole('button', { name: String(i) }),
         ).toBeInTheDocument();
@@ -22,7 +22,7 @@ describe('App in initial state', () => {
     }
   });
 
-  describe('should display operation and clear buttons', () => {
+  describe('operation and control buttons', () => {
     const buttonsNames = [
       'plus',
       'minus',
@@ -37,9 +37,7 @@ describe('App in initial state', () => {
     const displayValues = ['+', '-', '/', '*', '=', 'C', 'AC', '+/-', '.'];
 
     for (let i = 0; i < buttonsNames.length; i += 1) {
-      it(`${buttonsNames[i]} button`, () => {
-        render(<App />);
-
+      it(`should display ${buttonsNames[i]} button with symbol ${displayValues[i]}`, () => {
         expect(
           screen.getByRole('button', { name: buttonsNames[i] }),
         ).toHaveTextContent(displayValues[i]);
