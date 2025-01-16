@@ -20,14 +20,35 @@ describe('Entering values', () => {
     }
   });
 
-  it(`should limit input's integer part to  ${INTEGER_PART_LIMIT} digits`, async () => {
-    const { user } = renderWithUser(<App />);
+  describe('length limitations', () => {
+    it(`should limit input's integer part to  ${INTEGER_PART_LIMIT} digits`, async () => {
+      const { user } = renderWithUser(<App />);
 
-    for (let i = 9; i >= 0; i -= 1) {
-      await enterNumber(user, String(i));
-    }
+      for (let i = 9; i >= 0; i -= 1) {
+        await enterNumber(user, String(i));
+      }
 
-    expectDisplayValueToBe('98765432');
+      expectDisplayValueToBe('98765432');
+    });
+
+    it(`should limit decimal places to ${DECIMAL_PART_LIMIT} digits`, async () => {
+      const { user } = renderWithUser(<App />);
+
+      await enterNumber(user, '7.11111');
+
+      expectDisplayValueToBe('7.111');
+    });
+
+    it('should combine both integer and decimal limitations within one number', async () => {
+      const { user } = renderWithUser(<App />);
+
+      await enterNumber(
+        user,
+        `${'9'.repeat(INTEGER_PART_LIMIT)}.${'9'.repeat(DECIMAL_PART_LIMIT)}`,
+      );
+
+      expectDisplayValueToBe('99999999.999');
+    });
   });
 
   describe('zero replacement', () => {
@@ -53,38 +74,21 @@ describe('Entering values', () => {
     }
   });
 
-  it('should allow entering decimal numbers', async () => {
-    const { user } = renderWithUser(<App />);
+  describe('decimal numbers', () => {
+    it('should allow entering decimal numbers', async () => {
+      const { user } = renderWithUser(<App />);
 
-    await enterNumber(user, '5.2');
+      await enterNumber(user, '5.2');
 
-    expectDisplayValueToBe('5.2');
-  });
+      expectDisplayValueToBe('5.2');
+    });
 
-  it(`should limit decimal places to ${DECIMAL_PART_LIMIT} digits`, async () => {
-    const { user } = renderWithUser(<App />);
+    it('should prohibit entering multiple dots in the same number', async () => {
+      const { user } = renderWithUser(<App />);
 
-    await enterNumber(user, '7.11111');
+      await enterNumber(user, '8...1');
 
-    expectDisplayValueToBe('7.111');
-  });
-
-  it('should prohibit entering multiple dots in the same number', async () => {
-    const { user } = renderWithUser(<App />);
-
-    await enterNumber(user, '8...1');
-
-    expectDisplayValueToBe('8.1');
-  });
-
-  it('should combine the integer and decimal limits resulting in a maximum of 11 digits in numbers', async () => {
-    const { user } = renderWithUser(<App />);
-
-    await enterNumber(
-      user,
-      `${'9'.repeat(INTEGER_PART_LIMIT)}.${'9'.repeat(DECIMAL_PART_LIMIT)}`,
-    );
-
-    expectDisplayValueToBe('99999999.999');
+      expectDisplayValueToBe('8.1');
+    });
   });
 });
