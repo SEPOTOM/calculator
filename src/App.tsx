@@ -1,6 +1,6 @@
 import { MouseEvent, useState } from 'react';
 
-import { Button } from '@/components';
+import { Button, Display } from '@/components';
 import { isValidNumber, performCalculation } from '@/utils';
 
 const DIGITS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
@@ -139,14 +139,7 @@ const App = () => {
 
   return (
     <div className="m-auto max-w-5xl p-3">
-      <input
-        role="alert"
-        type="text"
-        value={currentValue}
-        readOnly
-        aria-label="Calculator display"
-        className="outline-focus mb-6 w-full max-w-full rounded-sm bg-main px-2 py-3 text-right font-mono text-5xl tracking-wider text-secondary sm:mb-9"
-      />
+      <Display value={currentValue} />
 
       <div className="grid grid-cols-4 grid-rows-5 gap-3">
         {operationButtonsMetadata
